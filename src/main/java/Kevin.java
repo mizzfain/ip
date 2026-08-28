@@ -26,13 +26,21 @@ public class Kevin {
             } else if (input.startsWith("mark")) {
                 int taskIndex = Integer.parseInt(input.substring(5)) - 1;
                 Task task = tasks.get(taskIndex);
-                tasks.set(taskIndex, task.mark());
+                Task markedTask = task.mark();
+
+                tasks.set(taskIndex, markedTask);
+                System.out.println("Nice! I've marked this task as done:\n  " +
+                        markedTask + "\n");
 
                 input = scanner.nextLine();
             } else if (input.startsWith("unmark")) {
                 int taskIndex = Integer.parseInt(input.substring(7)) - 1;
                 Task task = tasks.get(taskIndex);
-                tasks.set(taskIndex, task.unmark());
+                Task unmarkedTask = task.unmark();
+
+                tasks.set(taskIndex, unmarkedTask);
+                System.out.println("OK, I've marked this task as not done yet:\n  " +
+                        unmarkedTask + "\n");
 
                 input = scanner.nextLine();
             } else {
