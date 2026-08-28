@@ -29,8 +29,8 @@ public class Kevin {
                 Task markedTask = task.mark();
 
                 tasks.set(taskIndex, markedTask);
-                System.out.println("Nice! I've marked this task as done:\n  " +
-                        markedTask + "\n");
+                System.out.println("Nice! I've marked this task as done:\n  "
+                        + markedTask + "\n");
 
                 input = scanner.nextLine();
             } else if (input.startsWith("unmark")) {
@@ -39,8 +39,8 @@ public class Kevin {
                 Task unmarkedTask = task.unmark();
 
                 tasks.set(taskIndex, unmarkedTask);
-                System.out.println("OK, I've marked this task as not done yet:\n  " +
-                        unmarkedTask + "\n");
+                System.out.println("OK, I've marked this task as not done yet:\n  "
+                        + unmarkedTask + "\n");
 
                 input = scanner.nextLine();
             } else {
