@@ -23,6 +23,18 @@ public class Kevin {
                 }
                 System.out.println();
                 input = scanner.nextLine();
+            } else if (input.startsWith("mark")) {
+                int taskIndex = Integer.parseInt(input.substring(5)) - 1;
+                Task task = tasks.get(taskIndex);
+                tasks.set(taskIndex, task.mark());
+
+                input = scanner.nextLine();
+            } else if (input.startsWith("unmark")) {
+                int taskIndex = Integer.parseInt(input.substring(7)) - 1;
+                Task task = tasks.get(taskIndex);
+                tasks.set(taskIndex, task.unmark());
+
+                input = scanner.nextLine();
             } else {
                 tasks.add(new Task(input));
                 System.out.println("added: " + input + "\n");
