@@ -5,7 +5,7 @@ public class Kevin {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        ArrayList<String> tasks = new ArrayList<String>();
+        ArrayList<Task> tasks = new ArrayList<Task>();
 
         String banner = "Hello! I'm Kevin.\n"
                 + "What would you like me to help you with?\n";
@@ -15,17 +15,17 @@ public class Kevin {
         String input = scanner.nextLine();
 
         while (!input.equals("bye")) {
-            if (!input.equals("list")) {
-                tasks.add(input);
-                System.out.println("added: " + input + "\n");
-                input = scanner.nextLine();
-            } else {
+            if (input.equals("list")) {
                 int counter = 1;
-                for (String task : tasks) {
-                    System.out.println(counter + ". " + task);
+                for (Task task : tasks) {
+                    System.out.println(counter + "." + task);
                     counter++;
                 }
                 System.out.println();
+                input = scanner.nextLine();
+            } else {
+                tasks.add(new Task(input));
+                System.out.println("added: " + input + "\n");
                 input = scanner.nextLine();
             }
         }
