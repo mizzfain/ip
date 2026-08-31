@@ -48,8 +48,8 @@ public class Kevin {
             } else if (input.startsWith("todo")) {
                 ToDo todo = new ToDo(input.substring(5));
                 tasks.add(todo);
-                System.out.println("Got it. I've added this task:\n" + todo
-                        + "\nNow you have " + tasks.size() + " tasks in the list.");
+                System.out.println("Got it. I've added this task:\n  " + todo
+                        + "\nNow you have " + tasks.size() + " tasks in the list.\n");
                 input = scanner.nextLine();
             } else if (input.startsWith("deadline")) {
                 String regex = "^deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
@@ -62,8 +62,27 @@ public class Kevin {
 
                     Deadline deadline = new Deadline(description, by);
                     tasks.add(deadline);
-                    System.out.println("Got it. I've added this task:\n" + deadline
-                            + "\nNow you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("Got it. I've added this task:\n  " + deadline
+                            + "\nNow you have " + tasks.size() + " tasks in the list.\n");
+
+                    input = scanner.nextLine();
+                }
+            } else if (input.startsWith("event")) {
+                String regex = "^event\\s+(?<description>.+?)\\s+"
+                        + "/from\\s+(?<from>.+?)\\s+"
+                        + "/to\\s+(?<to>.+)$";
+                Pattern pattern = Pattern.compile(regex);
+                Matcher matcher = pattern.matcher(input);
+
+                if (matcher.matches()) {
+                    String description = matcher.group("description");
+                    String from = matcher.group("from");
+                    String to = matcher.group("to");
+
+                    Event event = new Event(description, from, to);
+                    tasks.add(event);
+                    System.out.println("Got it. I've added this task:\n  " + event
+                            + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
                     input = scanner.nextLine();
                 }
