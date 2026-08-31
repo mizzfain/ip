@@ -27,15 +27,23 @@ public class Kevin {
                     System.out.println();
                     input = scanner.nextLine();
                 } else if (input.startsWith("mark")) {
-                    int taskIndex = Integer.parseInt(input.substring(5)) - 1;
-                    Task task = tasks.get(taskIndex);
-                    Task markedTask = task.mark();
+                    Pattern pattern = Pattern.compile("mark\\s+(\\d+)");
+                    Matcher matcher = pattern.matcher(input);
 
-                    tasks.set(taskIndex, markedTask);
-                    System.out.println("Nice! I've marked this task as done:\n  "
-                            + markedTask + "\n");
+                    if (matcher.matches()) {
+                        int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
+                        Task task = tasks.get(taskIndex);
 
-                    input = scanner.nextLine();
+                        Task markedTask = task.mark();
+                        tasks.set(taskIndex, markedTask);
+
+                        System.out.println("Nice! I've marked this task as done:\n  "
+                                + markedTask + "\n");
+
+                        input = scanner.nextLine();
+                    } else {
+                        throw new KevinException("FAIL! Must include a task number.");
+                    }
                 } else if (input.startsWith("unmark")) {
                     int taskIndex = Integer.parseInt(input.substring(7)) - 1;
                     Task task = tasks.get(taskIndex);
@@ -61,7 +69,7 @@ public class Kevin {
 
                         input = scanner.nextLine();
                     } else {
-                        throw new KevinException("FAIL! ToDo does not have a description");
+                        throw new KevinException("FAIL! ToDo does not have a description.");
                     }
                 } else if (input.startsWith("deadline")) {
                     String regex = "^deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
@@ -80,7 +88,7 @@ public class Kevin {
                         input = scanner.nextLine();
                     } else {
                         throw new KevinException("FAIL! Deadline does not have a description"
-                                + " or a by date");
+                                + " or a by date.");
                     }
                 } else if (input.startsWith("event")) {
                     String regex = "^event\\s+(?<description>.+?)\\s+"
@@ -102,13 +110,16 @@ public class Kevin {
                         input = scanner.nextLine();
                     } else {
                         throw new KevinException("FAIL! Event does not have a description," +
-                                " from or to date");
+                                " from or to date.");
                     }
                 } else {
-                    throw new KevinException("??? Sorry but I don't speak gibberish");
+                    throw new KevinException("??? Sorry but I don't speak gibberish.");
                 }
             } catch (KevinException e) {
                 System.out.println(e.getMessage() + "\n");
+                input = scanner.nextLine();
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Must provide a valid task number.\n");
                 input = scanner.nextLine();
             }
         }
