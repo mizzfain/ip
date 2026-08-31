@@ -105,12 +105,10 @@ public class Kevin {
                                 " from or to date");
                     }
                 } else {
-                    tasks.add(new Task(input));
-                    System.out.println("added: " + input + "\n");
-                    input = scanner.nextLine();
+                    throw new KevinException("??? Sorry but I don't speak gibberish");
                 }
             } catch (KevinException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage() + "\n");
                 input = scanner.nextLine();
             }
         }
