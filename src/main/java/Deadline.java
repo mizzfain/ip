@@ -5,9 +5,9 @@ public class Deadline extends Task {
         super(description);
         this.by = by;
     }
-    
+
     @Override
     public String toString() {
-        return "[D]" + super.toString() + "(by: " + this.by + ")";
+        return "[D]" + super.toString() + " (by: " + this.by + ")";
     }
 }
