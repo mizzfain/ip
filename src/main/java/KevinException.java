@@ -1,4 +1,4 @@
-public class KevinException extends RuntimeException {
+public class KevinException extends Exception {
     public KevinException(String message) {
         super(message);
     }
