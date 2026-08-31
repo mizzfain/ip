@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Kevin {
     public static void main(String[] args) {
@@ -49,6 +51,22 @@ public class Kevin {
                 System.out.println("Got it. I've added this task:\n" + todo
                         + "\nNow you have " + tasks.size() + " tasks in the list.");
                 input = scanner.nextLine();
+            } else if (input.startsWith("deadline")) {
+                String regex = "^deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
+                Pattern pattern = Pattern.compile(regex);
+                Matcher matcher = pattern.matcher(input);
+
+                if (matcher.matches()) {
+                    String description = matcher.group("description");
+                    String by = matcher.group("by");
+
+                    Deadline deadline = new Deadline(description, by);
+                    tasks.add(deadline);
+                    System.out.println("Got it. I've added this task:\n" + deadline
+                            + "\nNow you have " + tasks.size() + " tasks in the list.");
+
+                    input = scanner.nextLine();
+                }
             } else {
                 tasks.add(new Task(input));
                 System.out.println("added: " + input + "\n");
