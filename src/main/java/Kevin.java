@@ -46,11 +46,20 @@ public class Kevin {
 
                 input = scanner.nextLine();
             } else if (input.startsWith("todo")) {
-                ToDo todo = new ToDo(input.substring(5));
-                tasks.add(todo);
-                System.out.println("Got it. I've added this task:\n  " + todo
-                        + "\nNow you have " + tasks.size() + " tasks in the list.\n");
-                input = scanner.nextLine();
+                String regex = "^todo\\s+(?<description>.+?)$";
+                Pattern pattern = Pattern.compile(regex);
+                Matcher matcher = pattern.matcher(input);
+
+                if (matcher.matches()) {
+                    String description = matcher.group("description");
+
+                    ToDo todo = new ToDo(description);
+                    tasks.add(todo);
+                    System.out.println("Got it. I've added this task:\n  " + todo
+                            + "\nNow you have " + tasks.size() + " tasks in the list.\n");
+
+                    input = scanner.nextLine();
+                }
             } else if (input.startsWith("deadline")) {
                 String regex = "^deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
                 Pattern pattern = Pattern.compile(regex);
@@ -85,6 +94,9 @@ public class Kevin {
                             + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
                     input = scanner.nextLine();
+                } else {
+                    throw new KevinException("Event does not have a description," +
+                            " from or to date");
                 }
             } else {
                 tasks.add(new Task(input));
