@@ -43,6 +43,12 @@ public class Kevin {
                         + unmarkedTask + "\n");
 
                 input = scanner.nextLine();
+            } else if (input.startsWith("todo")) {
+                ToDo todo = new ToDo(input.substring(5));
+                tasks.add(todo);
+                System.out.println("Got it. I've added this task:\n" + todo
+                        + "\nNow you have " + tasks.size() + " tasks in the list.");
+                input = scanner.nextLine();
             } else {
                 tasks.add(new Task(input));
                 System.out.println("added: " + input + "\n");
