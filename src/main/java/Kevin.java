@@ -27,7 +27,7 @@ public class Kevin {
                     System.out.println();
                     input = scanner.nextLine();
                 } else if (input.startsWith("mark")) {
-                    Pattern pattern = Pattern.compile("mark\\s+(\\d+)");
+                    Pattern pattern = Pattern.compile("^mark\\s+(\\d+)");
                     Matcher matcher = pattern.matcher(input);
 
                     if (matcher.matches()) {
@@ -45,15 +45,23 @@ public class Kevin {
                         throw new KevinException("FAIL! Must include a task number.");
                     }
                 } else if (input.startsWith("unmark")) {
-                    int taskIndex = Integer.parseInt(input.substring(7)) - 1;
-                    Task task = tasks.get(taskIndex);
-                    Task unmarkedTask = task.unmark();
+                    Pattern pattern = Pattern.compile("^unmark\\s+(\\d+)");
+                    Matcher matcher = pattern.matcher(input);
 
-                    tasks.set(taskIndex, unmarkedTask);
-                    System.out.println("OK, I've marked this task as not done yet:\n  "
-                            + unmarkedTask + "\n");
+                    if (matcher.matches()) {
+                        int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
+                        Task task = tasks.get(taskIndex);
 
-                    input = scanner.nextLine();
+                        Task unmarkedTask = task.unmark();
+                        tasks.set(taskIndex, unmarkedTask);
+
+                        System.out.println("Nice! I've marked this task as done:\n  "
+                                + unmarkedTask + "\n");
+
+                        input = scanner.nextLine();
+                    } else {
+                        throw new KevinException("FAIL! Must include a task number.");
+                    }
                 } else if (input.startsWith("todo")) {
                     String regex = "^todo\\s+(?<description>.+?)$";
                     Pattern pattern = Pattern.compile(regex);
