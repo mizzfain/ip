@@ -17,6 +17,7 @@ public class Task {
         return this;
     }
 
+    @Override
     public String toString() {
         if (isDone) {
             return "[X] " + this.description;
