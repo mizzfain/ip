@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.BufferedWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Kevin {
     public static void main(String[] args) throws KevinException {
@@ -94,7 +96,7 @@ public class Kevin {
                     if (matcher.matches()) {
                         String description = matcher.group("description");
                         String by = matcher.group("by");
-
+                        LocalDateTime
                         Deadline deadline = new Deadline(description, by);
                         tasks.add(deadline);
                         System.out.println("Got it. I've added this task:\n  " + deadline
@@ -182,5 +184,10 @@ public class Kevin {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String parseDateTime(String dateTimeString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy hmm a");
+        return LocalDateTime.parse(dateTimeString, formatter);
     }
 }
