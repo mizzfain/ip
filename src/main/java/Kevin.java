@@ -1,7 +1,11 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.BufferedWriter;
 
 public class Kevin {
     public static void main(String[] args) throws KevinException {
@@ -40,6 +44,7 @@ public class Kevin {
                         System.out.println("Nice! I've marked this task as done:\n  "
                                 + markedTask + "\n");
 
+                        Kevin.saveFile(tasks);
                         input = scanner.nextLine();
                     } else {
                         throw new KevinException("FAIL! Must include a task number.");
@@ -58,6 +63,7 @@ public class Kevin {
                         System.out.println("Nice! I've marked this task as done:\n  "
                                 + unmarkedTask + "\n");
 
+                        Kevin.saveFile(tasks);
                         input = scanner.nextLine();
                     } else {
                         throw new KevinException("FAIL! Must include a task number.");
@@ -75,6 +81,7 @@ public class Kevin {
                         System.out.println("Got it. I've added this task:\n  " + todo
                                 + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
+                        Kevin.saveFile(tasks);
                         input = scanner.nextLine();
                     } else {
                         throw new KevinException("FAIL! ToDo does not have a description.");
@@ -93,6 +100,7 @@ public class Kevin {
                         System.out.println("Got it. I've added this task:\n  " + deadline
                                 + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
+                        Kevin.saveFile(tasks);
                         input = scanner.nextLine();
                     } else {
                         throw new KevinException("FAIL! Deadline does not have a description"
@@ -115,6 +123,7 @@ public class Kevin {
                         System.out.println("Got it. I've added this task:\n  " + event
                                 + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
+                        Kevin.saveFile(tasks);
                         input = scanner.nextLine();
                     } else {
                         throw new KevinException("FAIL! Event does not have a description," +
@@ -133,6 +142,7 @@ public class Kevin {
                                 + task + "\nNow you have " + tasks.size()
                                 + " tasks in the list.\n");
 
+                        Kevin.saveFile(tasks);
                         input = scanner.nextLine();
                     } else {
                         throw new KevinException("FAIL! Must include a task number.");
@@ -151,5 +161,26 @@ public class Kevin {
 
         String ending = "Bye. Hope I was of assistance to you!";
         System.out.println(ending);
+    }
+
+    public static void saveFile(ArrayList<Task> tasks) {
+        Path dataPath = Path.of("data");
+        Path filePath = dataPath.resolve("kevin.txt");
+
+        try {
+            if (Files.notExists(dataPath)) {
+                Files.createDirectories(dataPath);
+            }
+
+            try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
+                for (Task task : tasks) {
+                    String taskString = task.toString();
+                    writer.write(taskString);
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
