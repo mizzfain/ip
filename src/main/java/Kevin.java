@@ -95,9 +95,9 @@ public class Kevin {
 
                     if (matcher.matches()) {
                         String description = matcher.group("description");
-                        String by = matcher.group("by");
-                        LocalDateTime
-                        Deadline deadline = new Deadline(description, by);
+                        String byString = matcher.group("by");
+                        LocalDateTime byDateTime = parseDateTimeString(byString);
+                        Deadline deadline = new Deadline(description, byDateTime);
                         tasks.add(deadline);
                         System.out.println("Got it. I've added this task:\n  " + deadline
                                 + "\nNow you have " + tasks.size() + " tasks in the list.\n");
@@ -186,7 +186,7 @@ public class Kevin {
         }
     }
 
-    public static String parseDateTime(String dateTimeString) {
+    public static String parseDateTimeString(String dateTimeString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy hmm a");
         return LocalDateTime.parse(dateTimeString, formatter);
     }
