@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -44,6 +48,18 @@ public class TaskList {
 
     public int size() {
         return tasks.size();
+    }
+
+    public void save(Path filePath) {
+        try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
+            for (Task task : tasks) {
+                String taskString = task.formatSaveString();
+                writer.write(taskString);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

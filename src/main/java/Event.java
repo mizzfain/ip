@@ -11,8 +11,14 @@ public class Event extends Task {
     }
 
     @Override
+    public String formatSaveString() {
+        return "E | " + super.formatSaveString() + " | " + formatDateTime(start)
+                + " | " + formatDateTime(end);
+    }
+
+    @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + formatDateTime(this.start)
-                + " to: " + formatDateTime(this.end) + ")";
+        return "[E]" + super.toString() + " (from: " + formatDateTime(start)
+                + " to: " + formatDateTime(end) + ")";
     }
 }

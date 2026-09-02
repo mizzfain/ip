@@ -25,7 +25,7 @@ public class Storage {
 
             try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
                 for (Task task : tasks) {
-                    String taskString = task.toString();
+                    String taskString = task.formatSaveString();
                     writer.write(taskString);
                     writer.newLine();
                 }

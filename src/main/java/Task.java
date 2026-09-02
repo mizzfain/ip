@@ -32,12 +32,20 @@ public class Task {
         return dateTime.format(DateTimeFormatter.ofPattern(pattern));
     }
 
+    public String formatSaveString() {
+        if (isDone) {
+            return "1 | " + description;
+        } else {
+            return "0 | " + description;
+        }
+    }
+
     @Override
     public String toString() {
         if (isDone) {
-            return "[X] " + this.description;
+            return "[X] " + description;
         } else {
-            return "[ ] " + this.description;
+            return "[ ] " + description;
         }
     }
 }
