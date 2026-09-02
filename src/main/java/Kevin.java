@@ -118,8 +118,8 @@ public class Kevin {
 
                     if (matcher.matches()) {
                         String description = matcher.group("description");
-                        String from = matcher.group("from");
-                        String to = matcher.group("to");
+                        LocalDateTime from = parseDateTimeString(matcher.group("from"));
+                        LocalDateTime to = parseDateTimeString(matcher.group("to"));
 
                         Event event = new Event(description, from, to);
                         tasks.add(event);
