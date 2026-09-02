@@ -13,7 +13,12 @@ public class Kevin {
         Ui ui = new Ui();
         String filePath = "data/tasks.txt";
         Storage storage = new Storage(filePath);
-        TaskList tasks = storage.load();
+        TaskList tasks;
+        try {
+            tasks = storage.load();
+        } catch (KevinException e){
+            tasks = new TaskList();
+        }
 
         String input = ui.start();
 

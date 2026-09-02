@@ -1,3 +1,0 @@
-[T][ ] read book
-[D][ ] borrow book (by: 5 Sept 2026 1pm)
-[E][X] book review (from: 13 Sept 2026 12pm to: 13 Sept 2026 1245pm)

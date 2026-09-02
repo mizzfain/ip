@@ -14,9 +14,17 @@ public class Storage {
     public TaskList load() throws KevinException {
         TaskList tasks = new TaskList();
 
-        try (Stream<String> lines = Files.lines(filePath)) {
-            lines.map(Task::fromFormatString)
-                    .forEach(tasks::add);
+        try {
+            Path folderPath = filePath.getParent();
+
+            if (folderPath != null) {
+                Files.createDirectories(folderPath);
+            }
+
+            try (Stream<String> lines = Files.lines(filePath)) {
+                lines.map(Task::fromFormatString)
+                        .forEach(tasks::add);
+            }
         } catch (IOException e) {
             throw new KevinException(e.getMessage());
         }
