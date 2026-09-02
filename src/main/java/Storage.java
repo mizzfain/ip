@@ -23,13 +23,7 @@ public class Storage {
                 Files.createDirectories(folderPath);
             }
 
-            try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
-                for (Task task : tasks) {
-                    String taskString = task.formatSaveString();
-                    writer.write(taskString);
-                    writer.newLine();
-                }
-            }
+            tasks.save(filePath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
