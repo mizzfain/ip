@@ -10,17 +10,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Kevin {
+    private Ui ui;
+
     public static void main(String[] args) throws KevinException {
-        Scanner scanner = new Scanner(System.in);
+        Ui ui = new Ui();
 
         ArrayList<Task> tasks = new ArrayList<Task>();
 
-        String banner = "Hello! I'm Kevin.\n"
-                + "What would you like me to help you with?\n";
-
-        System.out.println(banner);
-
-        String input = scanner.nextLine();
+        String input = ui.start();
 
         while (!input.equals("bye")) {
             try {
