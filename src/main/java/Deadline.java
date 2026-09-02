@@ -9,7 +9,7 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String saveFormatString() {
+    public String formatSaveString() {
         return "D | " + super.formatSaveString() + " | " + formatDateTime(by);
     }
 
