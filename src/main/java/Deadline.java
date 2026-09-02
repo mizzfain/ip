@@ -3,8 +3,13 @@ import java.time.LocalDateTime;
 public class Deadline extends Task {
     private LocalDateTime by;
 
+    public Deadline(String description, boolean isDone, LocalDateTime by) {
+        super(description, isDone);
+        this.by = by;
+    }
+
     public Deadline(String description, LocalDateTime by) {
-        super(description);
+        super(description, false);
         this.by = by;
     }
 

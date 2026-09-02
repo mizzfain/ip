@@ -4,8 +4,14 @@ public class Event extends Task {
     private LocalDateTime start;
     private LocalDateTime end;
 
+    public Event(String description, boolean isDone, LocalDateTime start, LocalDateTime end) {
+        super(description, isDone);
+        this.start = start;
+        this.end = end;
+    }
+
     public Event(String description, LocalDateTime start, LocalDateTime end) {
-        super(description);
+        super(description, false);
         this.start = start;
         this.end = end;
     }

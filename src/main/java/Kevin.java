@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.time.LocalDateTime;
@@ -11,8 +13,7 @@ public class Kevin {
         Ui ui = new Ui();
         String filePath = "data/tasks.txt";
         Storage storage = new Storage(filePath);
-
-        TaskList tasks = new TaskList();
+        TaskList tasks = storage.load();
 
         String input = ui.start();
 
@@ -145,8 +146,7 @@ public class Kevin {
             }
         }
 
-        String ending = "Bye. Hope I was of assistance to you!";
-        System.out.println(ending);
+        ui.end();
     }
 
     public static LocalDateTime parseDateTimeString(String dateTimeString) {

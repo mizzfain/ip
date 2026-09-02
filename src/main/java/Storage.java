@@ -1,8 +1,8 @@
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class Storage {
     private Path filePath;
@@ -11,8 +11,16 @@ public class Storage {
         this.filePath = Paths.get(filePathString);
     }
 
-    public TaskList load() {
+    public TaskList load() throws KevinException {
+        TaskList tasks = new TaskList();
 
+        try (Stream<String> lines = Files.lines(filePath)) {
+            lines.map(Task::fromFormatString)
+                    .forEach(tasks::add);
+        } catch (IOException e) {
+            throw new KevinException(e.getMessage());
+        }
+        return tasks;
     }
 
     public void save(TaskList tasks) {
