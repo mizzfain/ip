@@ -11,23 +11,20 @@ import java.time.format.DateTimeFormatter;
 
 public class Kevin {
     private Ui ui;
+    private TaskList tasks;
 
     public static void main(String[] args) throws KevinException {
         Ui ui = new Ui();
 
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        TaskList tasks = new TaskList();
 
         String input = ui.start();
 
         while (!input.equals("bye")) {
             try {
                 if (input.equals("list")) {
-                    int counter = 1;
-                    for (Task task : tasks) {
-                        System.out.println(counter + "." + task);
-                        counter++;
-                    }
-                    System.out.println();
+                    tasks.list();
+
                     input = scanner.nextLine();
                 } else if (input.startsWith("mark")) {
                     Pattern pattern = Pattern.compile("mark\\s+(\\d+)");
@@ -35,10 +32,7 @@ public class Kevin {
 
                     if (matcher.matches()) {
                         int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
-                        Task task = tasks.get(taskIndex);
-
-                        Task markedTask = task.mark();
-                        tasks.set(taskIndex, markedTask);
+                        Task markedTask = tasks.mark(taskIndex);
 
                         System.out.println("Nice! I've marked this task as done:\n  "
                                 + markedTask + "\n");
@@ -54,10 +48,7 @@ public class Kevin {
 
                     if (matcher.matches()) {
                         int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
-                        Task task = tasks.get(taskIndex);
-
-                        Task unmarkedTask = task.unmark();
-                        tasks.set(taskIndex, unmarkedTask);
+                        Task unmarkedTask = tasks.unmark(taskIndex);
 
                         System.out.println("Nice! I've marked this task as done:\n  "
                                 + unmarkedTask + "\n");
@@ -135,11 +126,10 @@ public class Kevin {
 
                     if (matcher.matches()) {
                         int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
-                        Task task = tasks.get(taskIndex);
-                        tasks.remove(taskIndex);
+                        Task deletedTask = tasks.delete(taskIndex);
 
                         System.out.println("Noted. I've removed this task:\n  "
-                                + task + "\nNow you have " + tasks.size()
+                                + deletedTask + "\nNow you have " + tasks.size()
                                 + " tasks in the list.\n");
 
                         Kevin.saveFile(tasks);
