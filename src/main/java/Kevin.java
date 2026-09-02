@@ -188,7 +188,7 @@ public class Kevin {
     }
 
     public static LocalDateTime parseDateTimeString(String dateTimeString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yy h[:mm]a");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[d/M/yy hmma][d/M/yy ha]");
         return LocalDateTime.parse(dateTimeString, formatter);
     }
 }
