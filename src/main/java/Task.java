@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -17,6 +20,18 @@ public class Task {
         return this;
     }
 
+    protected String formatDateTime(LocalDateTime dateTime) {
+        String pattern = "d MMM yyyy ";
+
+        if (dateTime.getMinute() == 0) {
+            pattern += "ha";
+        } else {
+            pattern += "hmma";
+        }
+
+        return dateTime.format(DateTimeFormatter.ofPattern(pattern));
+    }
+
     @Override
     public String toString() {
         if (isDone) {
@@ -25,5 +40,4 @@ public class Task {
             return "[ ] " + this.description;
         }
     }
-
 }

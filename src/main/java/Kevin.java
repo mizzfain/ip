@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.BufferedWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Kevin {
     public static void main(String[] args) throws KevinException {
@@ -93,9 +95,10 @@ public class Kevin {
 
                     if (matcher.matches()) {
                         String description = matcher.group("description");
-                        String by = matcher.group("by");
+                        String byString = matcher.group("by");
+                        LocalDateTime byDateTime = parseDateTimeString(byString);
 
-                        Deadline deadline = new Deadline(description, by);
+                        Deadline deadline = new Deadline(description, byDateTime);
                         tasks.add(deadline);
                         System.out.println("Got it. I've added this task:\n  " + deadline
                                 + "\nNow you have " + tasks.size() + " tasks in the list.\n");
@@ -115,8 +118,8 @@ public class Kevin {
 
                     if (matcher.matches()) {
                         String description = matcher.group("description");
-                        String from = matcher.group("from");
-                        String to = matcher.group("to");
+                        LocalDateTime from = parseDateTimeString(matcher.group("from"));
+                        LocalDateTime to = parseDateTimeString(matcher.group("to"));
 
                         Event event = new Event(description, from, to);
                         tasks.add(event);
@@ -182,5 +185,10 @@ public class Kevin {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static LocalDateTime parseDateTimeString(String dateTimeString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[d/M/yy hmma][d/M/yy ha]");
+        return LocalDateTime.parse(dateTimeString, formatter);
     }
 }
