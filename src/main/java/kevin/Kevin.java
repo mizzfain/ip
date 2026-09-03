@@ -121,8 +121,13 @@ public class Kevin {
         new Kevin("data/tasks.txt").run();
     }
 
-    public static LocalDateTime parseDateTimeString(String dateTimeString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[d/M/yy hmma][d/M/yy ha]");
-        return LocalDateTime.parse(dateTimeString, formatter);
+    public static LocalDateTime parseDateTimeString(String dateTimeString) throws KevinException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[d/M/yy hmma][d/M/yy ha]");
+            return LocalDateTime.parse(dateTimeString, formatter);
+        } catch (Exception e) {
+            throw new KevinException("Please input date time using D/M/YY Ham/pm or HMMam/pm");
+        }
+
     }
 }
