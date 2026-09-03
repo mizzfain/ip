@@ -54,7 +54,7 @@ public class Kevin {
                     storage.save(tasks);
                     parser = new Parser(ui.readNextLine());
                 } else if (parser.startsWith("todo")) {
-                    String description = parser.hasToDo();
+                    String description = parser.parseToDo();
                     ToDo todo = new ToDo(description);
                     tasks.add(todo);
 
@@ -65,7 +65,7 @@ public class Kevin {
                     parser = new Parser(ui.readNextLine());
 
                 } else if (parser.startsWith("deadline")) {
-                    Matcher matcher = parser.hasDeadline();
+                    Matcher matcher = parser.parseDeadline();
 
                     String description = matcher.group("description");
                     String byString = matcher.group("by");
@@ -80,7 +80,7 @@ public class Kevin {
                     parser = new Parser(ui.readNextLine());
 
                 } else if (parser.startsWith("event")) {
-                    Matcher matcher = parser.hasEvent();
+                    Matcher matcher = parser.parseEvent();
 
                     String description = matcher.group("description");
                     LocalDateTime from = parseDateTimeString(matcher.group("from"));
@@ -111,10 +111,7 @@ public class Kevin {
             } catch (KevinException e) {
                 System.out.println(e.getMessage() + "\n");
                 parser = new Parser(ui.readNextLine());
-            } /*catch (IndexOutOfBoundsException e) {
-                System.out.println("Must provide a valid task number.\n");
-                parser = new Parser(ui.readNextLine());
-            }*/
+            }
         }
 
         ui.end();

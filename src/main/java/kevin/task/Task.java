@@ -44,13 +44,12 @@ public class Task {
     }
 
     public static LocalDateTime parseSavedDateTimeString(String dateTimeString) {
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
         DateTimeFormatter formatter = new DateTimeFormatterBuilder().
                 appendPattern("d MMM yyyy ").
                 optionalStart().appendPattern("hmm").optionalEnd().
                 optionalStart().appendPattern("h").optionalEnd().
                 appendPattern("a").
-                toFormatter(Locale.US);
+                toFormatter(Locale.ENGLISH);
         return LocalDateTime.parse(dateTimeString, formatter);
     }
 

@@ -33,7 +33,7 @@ public class Parser {
         }
     }
 
-    public String hasToDo() throws KevinException {
+    public String parseToDo() throws KevinException {
         Pattern pattern = Pattern.compile("todo\\s+(?<description>.+?)$");
         Matcher matcher = pattern.matcher(input);
 
@@ -44,7 +44,7 @@ public class Parser {
         }
     }
 
-    public Matcher hasDeadline() throws KevinException {
+    public Matcher parseDeadline() throws KevinException {
         String regex = "deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
@@ -56,7 +56,7 @@ public class Parser {
         }
     }
 
-    public Matcher hasEvent() throws KevinException {
+    public Matcher parseEvent() throws KevinException {
         String regex = "event\\s+(?<description>.+?)\\s+"
                 + "/from\\s+(?<from>.+?)\\s+"
                 + "/to\\s+(?<to>.+)$";
