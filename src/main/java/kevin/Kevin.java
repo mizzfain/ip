@@ -32,8 +32,8 @@ public class Kevin {
             try {
                 if (parser.isList()) {
                     tasks.list();
-
                     parser = new Parser(ui.readNextLine());
+
                 } else if (parser.startsWith("mark")) {
                     int taskIndex = parser.parseIndex("mark");
                     Task markedTask = tasks.mark(taskIndex);
@@ -105,6 +105,11 @@ public class Kevin {
                     storage.save(tasks);
                     parser = new Parser(ui.readNextLine());
 
+                } else if (parser.startsWith("find")) {
+                    String keyword = parser.parseKeyword();
+                    tasks.find(keyword);
+
+                    parser = new Parser(ui.readNextLine());
                 } else {
                     throw new KevinException("??? Sorry but I don't speak gibberish.");
                 }
