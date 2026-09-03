@@ -33,8 +33,19 @@ public class Parser {
         }
     }
 
+    public String parseKeyword() throws KevinException {
+        Pattern pattern = Pattern.compile("^find\\s+(.+)");
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.matches()) {
+            return matcher.group(1);
+        } else {
+            throw new KevinException("No keyword to search for.");
+        }
+    }
+
     public String parseToDo() throws KevinException {
-        Pattern pattern = Pattern.compile("todo\\s+(?<description>.+?)$");
+        Pattern pattern = Pattern.compile("^todo\\s+(?<description>.+?)$");
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {
@@ -45,7 +56,7 @@ public class Parser {
     }
 
     public Matcher parseDeadline() throws KevinException {
-        String regex = "deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
+        String regex = "^deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
@@ -57,7 +68,7 @@ public class Parser {
     }
 
     public Matcher parseEvent() throws KevinException {
-        String regex = "event\\s+(?<description>.+?)\\s+"
+        String regex = "^event\\s+(?<description>.+?)\\s+"
                 + "/from\\s+(?<from>.+?)\\s+"
                 + "/to\\s+(?<to>.+)$";
         Pattern pattern = Pattern.compile(regex);

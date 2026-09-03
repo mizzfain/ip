@@ -107,6 +107,11 @@ public class Kevin {
                     storage.save(tasks);
                     parser = new Parser(ui.readNextLine());
 
+                } else if (parser.startsWith("find")) {
+                    String keyword = parser.parseKeyword();
+                    tasks.find(keyword);
+
+                    parser = new Parser(ui.readNextLine());
                 } else {
                     throw new KevinException("??? Sorry but I don't speak gibberish.");
                 }

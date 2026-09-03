@@ -63,6 +63,17 @@ public class TaskList {
         System.out.println();
     }
 
+    public void find(String keyword) {
+        int counter = 1;
+        for (Task task : tasks) {
+            if (task.contains(keyword)) {
+                System.out.println(counter + "." + task);
+                counter++;
+            }
+        }
+        System.out.println();
+    }
+
     public int size() {
         return tasks.size();
     }

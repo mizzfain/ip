@@ -31,6 +31,10 @@ public class Task {
         return this;
     }
 
+    public boolean contains(String keyword) {
+        return this.description.contains(keyword);
+    }
+
     protected String formatDateTime(LocalDateTime dateTime) {
         String pattern = "d MMM yyyy ";
 

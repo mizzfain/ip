@@ -1,1 +1,3 @@
 T | 0 | test
+T | 0 | school
+D | 0 | chem test | 4 Sep 2026 1PM
