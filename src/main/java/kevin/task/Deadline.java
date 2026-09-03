@@ -2,6 +2,9 @@ package kevin.task;
 
 import java.time.LocalDateTime;
 
+/**
+ * Deadline Class is a Task with a by date.
+ */
 public class Deadline extends Task {
     private LocalDateTime by;
 
