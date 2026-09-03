@@ -33,6 +33,7 @@ public class Storage {
         } catch (IOException e) {
             throw new KevinException(e.getMessage());
         }
+
         return tasks;
     }
 

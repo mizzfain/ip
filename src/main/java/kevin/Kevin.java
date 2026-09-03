@@ -32,8 +32,8 @@ public class Kevin {
             try {
                 if (parser.isList()) {
                     tasks.list();
-
                     parser = new Parser(ui.readNextLine());
+
                 } else if (parser.startsWith("mark")) {
                     int taskIndex = parser.parseIndex("mark");
                     Task markedTask = tasks.mark(taskIndex);
@@ -53,6 +53,7 @@ public class Kevin {
 
                     storage.save(tasks);
                     parser = new Parser(ui.readNextLine());
+
                 } else if (parser.startsWith("todo")) {
                     String description = parser.parseToDo();
                     ToDo todo = new ToDo(description);
@@ -68,11 +69,11 @@ public class Kevin {
                     Matcher matcher = parser.parseDeadline();
 
                     String description = matcher.group("description");
-                    String byString = matcher.group("by");
-                    LocalDateTime byDateTime = parseDateTimeString(byString);
+                    LocalDateTime byDateTime = parseDateTimeString(matcher.group("by");
 
                     Deadline deadline = new Deadline(description, byDateTime);
                     tasks.add(deadline);
+
                     ui.print("Got it. I've added this task:\n  " + deadline
                             + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
@@ -88,6 +89,7 @@ public class Kevin {
 
                     Event event = new Event(description, from, to);
                     tasks.add(event);
+
                     ui.print("Got it. I've added this task:\n  " + event
                             + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
