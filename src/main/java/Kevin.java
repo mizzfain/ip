@@ -6,19 +6,28 @@ import java.time.format.DateTimeFormatter;
 public class Kevin {
     private Ui ui;
     private TaskList tasks;
+    private Storage storage;
+
+    public Kevin(String filePath) {
+        this.ui = new Ui();
+        this.storage = new Storage(filePath);
+        try {
+            this.tasks = storage.load();
+        } catch (KevinException e){
+            tasks = new TaskList();
+        }
+    }
+
+
 
     public static void main(String[] args) throws KevinException {
         Ui ui = new Ui();
-        ui.print("made ui");
         String filePath = "data/tasks.txt";
-        ui.print("making storage");
         Storage storage = new Storage(filePath);
         TaskList tasks;
         try {
-            ui.print("loading tasks");
             tasks = storage.load();
         } catch (KevinException e){
-            ui.print("creating tasks");
             tasks = new TaskList();
         }
         ui.print("creating parser");
