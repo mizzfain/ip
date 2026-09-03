@@ -13,24 +13,12 @@ public class Kevin {
         this.storage = new Storage(filePath);
         try {
             this.tasks = storage.load();
-        } catch (KevinException e){
+        } catch (KevinException e) {
             tasks = new TaskList();
         }
     }
 
-
-
-    public static void main(String[] args) throws KevinException {
-        Ui ui = new Ui();
-        String filePath = "data/tasks.txt";
-        Storage storage = new Storage(filePath);
-        TaskList tasks;
-        try {
-            tasks = storage.load();
-        } catch (KevinException e){
-            tasks = new TaskList();
-        }
-        ui.print("creating parser");
+    public void run() {
         Parser parser = new Parser(ui.start());
 
         while (parser.isNotBye()) {
@@ -116,13 +104,17 @@ public class Kevin {
             } catch (KevinException e) {
                 System.out.println(e.getMessage() + "\n");
                 parser = new Parser(ui.readNextLine());
-            } catch (IndexOutOfBoundsException e) {
+            } /*catch (IndexOutOfBoundsException e) {
                 System.out.println("Must provide a valid task number.\n");
                 parser = new Parser(ui.readNextLine());
-            }
+            }*/
         }
 
         ui.end();
+    }
+
+    public static void main(String[] args) throws KevinException {
+        new Kevin("data/tasks.txt").run();
     }
 
     public static LocalDateTime parseDateTimeString(String dateTimeString) {

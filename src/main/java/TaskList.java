@@ -19,22 +19,34 @@ public class TaskList {
         tasks.add(task);
     }
 
-    public Task delete(int taskIndex) {
-        Task task = tasks.get(taskIndex);
-        tasks.remove(taskIndex);
-        return task;
+    public Task delete(int taskIndex) throws KevinException {
+        try {
+            Task task = tasks.get(taskIndex);
+            tasks.remove(taskIndex);
+            return task;
+        } catch (IndexOutOfBoundsException e) {
+            throw new KevinException("Must include a valid task number.");
+        }
     }
 
-    public Task mark(int taskIndex) {
-        Task markedTask = tasks.get(taskIndex).mark();
-        tasks.set(taskIndex, markedTask);
-        return markedTask;
+    public Task mark(int taskIndex) throws KevinException {
+        try {
+            Task markedTask = tasks.get(taskIndex).mark();
+            tasks.set(taskIndex, markedTask);
+            return markedTask;
+        } catch (IndexOutOfBoundsException e) {
+            throw new KevinException("Must include a valid task number.");
+        }
     }
 
-    public Task unmark(int taskIndex) {
-        Task unmarkedTask = tasks.get(taskIndex).unmark();
-        tasks.set(taskIndex, unmarkedTask);
-        return unmarkedTask;
+    public Task unmark(int taskIndex) throws KevinException {
+        try {
+            Task unmarkedTask = tasks.get(taskIndex).unmark();
+            tasks.set(taskIndex, unmarkedTask);
+            return unmarkedTask;
+        } catch (IndexOutOfBoundsException e) {
+            throw new KevinException("Must include a valid task number.");
+        }
     }
 
     public void list() {
