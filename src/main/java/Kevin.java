@@ -1,5 +1,3 @@
-import java.io.IOException;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.time.LocalDateTime;
@@ -11,143 +9,107 @@ public class Kevin {
 
     public static void main(String[] args) throws KevinException {
         Ui ui = new Ui();
+        ui.print("made ui");
         String filePath = "data/tasks.txt";
+        ui.print("making storage");
         Storage storage = new Storage(filePath);
         TaskList tasks;
         try {
+            ui.print("loading tasks");
             tasks = storage.load();
         } catch (KevinException e){
+            ui.print("creating tasks");
             tasks = new TaskList();
         }
+        ui.print("creating parser");
+        Parser parser = new Parser(ui.start());
 
-        String input = ui.start();
-
-        while (!input.equals("bye")) {
+        while (parser.isNotBye()) {
             try {
-                if (input.equals("list")) {
+                if (parser.isList()) {
                     tasks.list();
 
-                    input = ui.readNextLine();
-                } else if (input.startsWith("mark")) {
-                    Pattern pattern = Pattern.compile("mark\\s+(\\d+)");
-                    Matcher matcher = pattern.matcher(input);
+                    parser = new Parser(ui.readNextLine());
+                } else if (parser.startsWith("mark")) {
+                    int taskIndex = parser.parseIndex("mark");
+                    Task markedTask = tasks.mark(taskIndex);
 
-                    if (matcher.matches()) {
-                        int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
-                        Task markedTask = tasks.mark(taskIndex);
+                    ui.print("Nice! I've marked this task as done:\n  "
+                            + markedTask + "\n");
 
-                        System.out.println("Nice! I've marked this task as done:\n  "
-                                + markedTask + "\n");
+                    storage.save(tasks);
+                    parser = new Parser(ui.readNextLine());
 
-                        storage.save(tasks);
-                        input = ui.readNextLine();
-                    } else {
-                        throw new KevinException("FAIL! Must include a task number.");
-                    }
-                } else if (input.startsWith("unmark")) {
-                    Pattern pattern = Pattern.compile("unmark\\s+(\\d+)");
-                    Matcher matcher = pattern.matcher(input);
+                } else if (parser.startsWith("unmark")) {
+                    int taskIndex = parser.parseIndex("unmark");
+                    Task unmarkedTask = tasks.unmark(taskIndex);
 
-                    if (matcher.matches()) {
-                        int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
-                        Task unmarkedTask = tasks.unmark(taskIndex);
+                    ui.print("OK, I've marked this task as not done yet:\n  "
+                            + unmarkedTask + "\n");
 
-                        System.out.println("Nice! I've marked this task as done:\n  "
-                                + unmarkedTask + "\n");
+                    storage.save(tasks);
+                    parser = new Parser(ui.readNextLine());
+                } else if (parser.startsWith("todo")) {
+                    String description = parser.hasToDo();
+                    ToDo todo = new ToDo(description);
+                    tasks.add(todo);
 
-                        storage.save(tasks);
-                        input = ui.readNextLine();
-                    } else {
-                        throw new KevinException("FAIL! Must include a task number.");
-                    }
-                } else if (input.startsWith("todo")) {
-                    String regex = "todo\\s+(?<description>.+?)$";
-                    Pattern pattern = Pattern.compile(regex);
-                    Matcher matcher = pattern.matcher(input);
+                    ui.print("Got it. I've added this task:\n  " + todo
+                            + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
-                    if (matcher.matches()) {
-                        String description = matcher.group("description");
+                    storage.save(tasks);
+                    parser = new Parser(ui.readNextLine());
 
-                        ToDo todo = new ToDo(description);
-                        tasks.add(todo);
-                        System.out.println("Got it. I've added this task:\n  " + todo
-                                + "\nNow you have " + tasks.size() + " tasks in the list.\n");
+                } else if (parser.startsWith("deadline")) {
+                    Matcher matcher = parser.hasDeadline();
 
-                        storage.save(tasks);
-                        input = ui.readNextLine();
-                    } else {
-                        throw new KevinException("FAIL! ToDo does not have a description.");
-                    }
-                } else if (input.startsWith("deadline")) {
-                    String regex = "deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
-                    Pattern pattern = Pattern.compile(regex);
-                    Matcher matcher = pattern.matcher(input);
+                    String description = matcher.group("description");
+                    String byString = matcher.group("by");
+                    LocalDateTime byDateTime = parseDateTimeString(byString);
 
-                    if (matcher.matches()) {
-                        String description = matcher.group("description");
-                        String byString = matcher.group("by");
-                        LocalDateTime byDateTime = parseDateTimeString(byString);
+                    Deadline deadline = new Deadline(description, byDateTime);
+                    tasks.add(deadline);
+                    ui.print("Got it. I've added this task:\n  " + deadline
+                            + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
-                        Deadline deadline = new Deadline(description, byDateTime);
-                        tasks.add(deadline);
-                        System.out.println("Got it. I've added this task:\n  " + deadline
-                                + "\nNow you have " + tasks.size() + " tasks in the list.\n");
+                    storage.save(tasks);
+                    parser = new Parser(ui.readNextLine());
 
-                        storage.save(tasks);
-                        input = ui.readNextLine();
-                    } else {
-                        throw new KevinException("FAIL! Deadline does not have a description"
-                                + " or a by date.");
-                    }
-                } else if (input.startsWith("event")) {
-                    String regex = "event\\s+(?<description>.+?)\\s+"
-                            + "/from\\s+(?<from>.+?)\\s+"
-                            + "/to\\s+(?<to>.+)$";
-                    Pattern pattern = Pattern.compile(regex);
-                    Matcher matcher = pattern.matcher(input);
+                } else if (parser.startsWith("event")) {
+                    Matcher matcher = parser.hasEvent();
 
-                    if (matcher.matches()) {
-                        String description = matcher.group("description");
-                        LocalDateTime from = parseDateTimeString(matcher.group("from"));
-                        LocalDateTime to = parseDateTimeString(matcher.group("to"));
+                    String description = matcher.group("description");
+                    LocalDateTime from = parseDateTimeString(matcher.group("from"));
+                    LocalDateTime to = parseDateTimeString(matcher.group("to"));
 
-                        Event event = new Event(description, from, to);
-                        tasks.add(event);
-                        System.out.println("Got it. I've added this task:\n  " + event
-                                + "\nNow you have " + tasks.size() + " tasks in the list.\n");
+                    Event event = new Event(description, from, to);
+                    tasks.add(event);
+                    ui.print("Got it. I've added this task:\n  " + event
+                            + "\nNow you have " + tasks.size() + " tasks in the list.\n");
 
-                        storage.save(tasks);
-                        input = ui.readNextLine();
-                    } else {
-                        throw new KevinException("FAIL! Event does not have a description," +
-                                " from or to date.");
-                    }
-                } else if (input.startsWith("delete")) {
-                    Pattern pattern = Pattern.compile("delete\\s+(\\d+)");
-                    Matcher matcher = pattern.matcher(input);
+                    storage.save(tasks);
+                    parser = new Parser(ui.readNextLine());
 
-                    if (matcher.matches()) {
-                        int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
-                        Task deletedTask = tasks.delete(taskIndex);
+                } else if (parser.startsWith("delete")) {
+                    int taskIndex = parser.parseIndex("delete");
+                    Task deletedTask = tasks.delete(taskIndex);
 
-                        System.out.println("Noted. I've removed this task:\n  "
-                                + deletedTask + "\nNow you have " + tasks.size()
-                                + " tasks in the list.\n");
+                    ui.print("Noted. I've removed this task:\n  "
+                            + deletedTask + "\nNow you have " + tasks.size()
+                            + " tasks in the list.\n");
 
-                        storage.save(tasks);
-                        input = ui.readNextLine();
-                    } else {
-                        throw new KevinException("FAIL! Must include a task number.");
-                    }
+                    storage.save(tasks);
+                    parser = new Parser(ui.readNextLine());
+
                 } else {
                     throw new KevinException("??? Sorry but I don't speak gibberish.");
                 }
             } catch (KevinException e) {
                 System.out.println(e.getMessage() + "\n");
-                input = ui.readNextLine();
+                parser = new Parser(ui.readNextLine());
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Must provide a valid task number.\n");
-                input = ui.readNextLine();
+                parser = new Parser(ui.readNextLine());
             }
         }
 

@@ -1,5 +1,5 @@
 public class KevinException extends Exception {
     public KevinException(String message) {
-        super(message);
+        super("FAIL! " + message);
     }
 }
