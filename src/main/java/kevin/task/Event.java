@@ -2,6 +2,9 @@ package kevin.task;
 
 import java.time.LocalDateTime;
 
+/**
+ * Event Class is a Task with a start and end date.
+ */
 public class Event extends Task {
     private LocalDateTime start;
     private LocalDateTime end;

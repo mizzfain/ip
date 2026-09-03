@@ -10,11 +10,20 @@ import kevin.task.Task;
 import kevin.task.TaskList;
 import kevin.task.ToDo;
 
+/**
+ * Chatbot named Kevin.
+ * Handles all logic and runs the chatbot.
+ */
 public class Kevin {
     private Ui ui;
     private TaskList tasks;
     private Storage storage;
 
+    /**
+     * Creates Kevin.
+     * Loads tasks from tasks.txt, or creates empty TaskList if does not exist.
+     * @param filePath of tasks.txt.
+     */
     public Kevin(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -25,6 +34,9 @@ public class Kevin {
         }
     }
 
+    /**
+     * Runs the chatbot.
+     */
     public void run() {
         Parser parser = new Parser(ui.start());
 
@@ -69,7 +81,7 @@ public class Kevin {
                     Matcher matcher = parser.parseDeadline();
 
                     String description = matcher.group("description");
-                    LocalDateTime byDateTime = parseDateTimeString(matcher.group("by");
+                    LocalDateTime byDateTime = parseDateTimeString(matcher.group("by"));
 
                     Deadline deadline = new Deadline(description, byDateTime);
                     tasks.add(deadline);
@@ -124,10 +136,20 @@ public class Kevin {
         ui.end();
     }
 
+    /**
+     * Main entry point for chatbot.
+     */
     public static void main(String[] args) throws KevinException {
         new Kevin("data/tasks.txt").run();
     }
 
+    /**
+     * Helper Function in run().
+     * Parses DateTimeString from the user input into LocalDateTime.
+     * @param dateTimeString
+     * @return LocalDateTime
+     * @throws KevinException If user input wrong format for date time.
+     */
     public static LocalDateTime parseDateTimeString(String dateTimeString) throws KevinException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[d/M/yy hmma][d/M/yy ha]");

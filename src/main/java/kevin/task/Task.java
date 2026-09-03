@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+/**
+ * Task is the parent class of all tasks.
+ */
 public class Task {
     private static final Pattern PIPE_SPLITTER = Pattern.compile("\\s*\\|\\s*");
 
@@ -17,17 +20,25 @@ public class Task {
         this.isDone = isDone;
     }
 
+    /**
+     * Creates Task with default value of false for isDone.
+     */
     public Task(String description) {
         this(description,false);
     }
 
+    /**
+     * Marks Task as done and returns it.
+     */
     public Task mark() {
-        this.isDone = true;
+        isDone = true;
         return this;
     }
-
+    /**
+     * Unmarks Task and returns it.
+     */
     public Task unmark() {
-        this.isDone = false;
+        isDone = false;
         return this;
     }
 
@@ -35,6 +46,11 @@ public class Task {
         return this.description.contains(keyword);
     }
 
+    /**
+     * Formats LocalDateTime object into String
+     * Outputs as d MMM yyyy hmma e.g 12 Apr 2026 1130am.
+     * If minutes is 0, exclude the minutes eg 12 Apr 2026 12pm.
+     */
     protected String formatDateTime(LocalDateTime dateTime) {
         String pattern = "d MMM yyyy ";
 
@@ -47,6 +63,11 @@ public class Task {
         return dateTime.format(DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
     }
 
+    /**
+     * Helper Function in parseLine().
+     * Parses DateTimeString from tasks.txt into LocalDateTime.
+     * Accepts d MMM yyyy hmma e.g 12 Apr 2026 1230pm and without the minutes e.g 12 Apr 2026 1130am.
+     */
     public static LocalDateTime parseSavedDateTimeString(String dateTimeString) {
         DateTimeFormatter formatter = new DateTimeFormatterBuilder().
                 appendPattern("d MMM yyyy ").
@@ -57,7 +78,10 @@ public class Task {
         return LocalDateTime.parse(dateTimeString, formatter);
     }
 
-
+    /**
+     * Formats Task into String for saving into tasks.txt.
+     * Output is 1/0 | description where 1 is done and 0 is not done.
+     */
     public String formatSaveString() {
         if (isDone) {
             return "1 | " + description;
@@ -66,8 +90,13 @@ public class Task {
         }
     }
 
-    public static Task fromFormatString(String formatString) {
-        String[] parts = PIPE_SPLITTER.split(formatString);
+    /**
+     * Parses Task from line when loading tasks.txt.
+     * @param line
+     * @return Task
+     */
+    public static Task parseLine(String line) {
+        String[] parts = PIPE_SPLITTER.split(line);
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
