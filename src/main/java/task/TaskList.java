@@ -1,4 +1,6 @@
-package kevin;
+package task;
+
+import kevin.KevinException;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
