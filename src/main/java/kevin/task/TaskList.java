@@ -9,14 +9,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class TaskList {
-    public ArrayList<Task> tasks;
+    private ArrayList<Task> tasks;
 
     public TaskList() {
         this.tasks = new ArrayList<Task>();
-    }
-
-    public TaskList(ArrayList<Task> tasks) {
-        this.tasks = tasks;
     }
 
     public void add(Task task) {
@@ -27,6 +23,7 @@ public class TaskList {
         try {
             Task task = tasks.get(taskIndex);
             tasks.remove(taskIndex);
+
             return task;
         } catch (IndexOutOfBoundsException e) {
             throw new KevinException("Must include a valid task number.");
@@ -37,6 +34,7 @@ public class TaskList {
         try {
             Task markedTask = tasks.get(taskIndex).mark();
             tasks.set(taskIndex, markedTask);
+
             return markedTask;
         } catch (IndexOutOfBoundsException e) {
             throw new KevinException("Must include a valid task number.");
@@ -47,6 +45,7 @@ public class TaskList {
         try {
             Task unmarkedTask = tasks.get(taskIndex).unmark();
             tasks.set(taskIndex, unmarkedTask);
+
             return unmarkedTask;
         } catch (IndexOutOfBoundsException e) {
             throw new KevinException("Must include a valid task number.");
@@ -55,10 +54,12 @@ public class TaskList {
 
     public void list() {
         int counter = 1;
+
         for (Task task : tasks) {
             System.out.println(counter + "." + task);
             counter++;
         }
+
         System.out.println();
     }
 

@@ -7,10 +7,10 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class Task {
+    private static final Pattern PIPE_SPLITTER = Pattern.compile("\\s*\\|\\s*");
+
     protected String description;
     protected boolean isDone;
-
-    private static final Pattern PIPE_SPLITTER = Pattern.compile("\\s*\\|\\s*");
 
     public Task(String description, boolean isDone) {
         this.description = description;
