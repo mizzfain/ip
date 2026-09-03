@@ -9,14 +9,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class TaskList {
-    public ArrayList<Task> tasks;
+    private ArrayList<Task> tasks;
 
     public TaskList() {
         this.tasks = new ArrayList<Task>();
-    }
-
-    public TaskList(ArrayList<Task> tasks) {
-        this.tasks = tasks;
     }
 
     public void add(Task task) {

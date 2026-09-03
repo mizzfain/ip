@@ -21,7 +21,7 @@ public class Kevin {
         try {
             this.tasks = storage.load();
         } catch (KevinException e) {
-            tasks = new TaskList();
+            this.tasks = new TaskList();
         }
     }
 
@@ -128,6 +128,5 @@ public class Kevin {
         } catch (Exception e) {
             throw new KevinException("Please input date time using D/M/YY Ham/pm or HMMam/pm");
         }
-
     }
 }
