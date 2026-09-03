@@ -1,5 +1,9 @@
 package kevin;
 
+import task.Task;
+import task.ToDo;
+import task.Deadline;
+import task.Event;
 import task.TaskList;
 
 import java.util.regex.Matcher;
