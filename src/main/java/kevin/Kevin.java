@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 
-import task.Deadline;
-import task.Event;
-import task.Task;
-import task.TaskList;
-import task.ToDo;
+import kevin.task.Deadline;
+import kevin.task.Event;
+import kevin.task.Task;
+import kevin.task.TaskList;
+import kevin.task.ToDo;
 
 public class Kevin {
     private Ui ui;

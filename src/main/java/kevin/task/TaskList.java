@@ -1,12 +1,12 @@
-package task;
+package kevin.task;
+
+import kevin.KevinException;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-
-import kevin.KevinException;
 
 public class TaskList {
     public ArrayList<Task> tasks;
