@@ -37,7 +37,7 @@ test {
 }
 
 application {
-    mainClass = 'seedu.duke.Duke'
+    mainClass = 'src/main/java/kevin/Kevin.java'
 }
 
 jar {
