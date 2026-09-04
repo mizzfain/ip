@@ -37,7 +37,7 @@ test {
 }
 
 application {
-    mainClass = 'src/main/java/kevin/Kevin.java'
+    mainClass = 'kevin/Kevin'
 }
 
 jar {
@@ -48,7 +48,7 @@ jar {
 }
 
 shadowJar {
-    archiveFileName = 'duke.jar'
+    archiveFileName = 'kevin.jar'
 }
 
 run {
