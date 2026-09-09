@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Ui {
     private static final String START_BANNER =
             "Hello! I'm Kevin.\nWhat would you like me to help you with?\n";
-    private static final String END_BANNER = "Bye. Hope I was of assistance to you!";
 
     private Scanner scanner;
 
@@ -24,9 +23,5 @@ public class Ui {
     public String start() {
         System.out.println(START_BANNER);
         return readNextLine();
-    }
-
-    public void end() {
-        System.out.println(END_BANNER);
     }
 }

@@ -39,13 +39,16 @@ public class Kevin {
      */
     public void run() {
         Parser parser = new Parser(ui.start());
+        boolean isNotBye = true;
 
-        while (parser.isNotBye()) {
+        while (isNotBye) {
             String response = respond(parser);
             ui.print(response);
+            if (!parser.isNotBye()) {
+                break;
+            }
             parser = new Parser(ui.readNextLine());
         }
-        ui.end();
     }
 
     public String respond(Parser parser) {
@@ -118,6 +121,8 @@ public class Kevin {
                 String keyword = parser.parseKeyword();
                 return tasks.find(keyword);
 
+            } else if (!parser.isNotBye()) {
+                return "Bye. Hope I was of assistance to you!";
             } else {
                 return "??? Sorry but I don't speak gibberish.\n";
             }

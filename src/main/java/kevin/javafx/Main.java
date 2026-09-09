@@ -11,13 +11,15 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kevin.Kevin;
+import kevin.KevinException;
+import kevin.Parser;
 
 
 public class Main extends Application {
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Kevin Photo.jpg"));
     private Image kevinImage = new Image(this.getClass().getResourceAsStream("/images/Kevin Photo.jpg"));
-    //private Kevin kevin = new Kevin();
+    private Kevin kevin = new Kevin("data/tasks.txt");
 
     private ScrollPane scrollPane;
     private VBox dialogContainer;
@@ -93,7 +95,11 @@ public class Main extends Application {
      */
     private void handleUserInput() {
         String userText = userInput.getText();
-        dialogContainer.getChildren().addAll(new DialogBox(userInput.getText(), userImage));
+        String kevinText = kevin.respond(new Parser(userText));
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(userText, userImage),
+                DialogBox.getKevinDialog(kevinText, kevinImage)
+        );
         userInput.clear();
     }
 }

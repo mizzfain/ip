@@ -1,2 +1,2 @@
-T | 1 | test
-T | 0 | tutorial
+T | 0 | test
+T | 1 | hm
