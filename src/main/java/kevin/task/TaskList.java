@@ -81,28 +81,36 @@ public class TaskList {
     }
 
     /**
-     * Lists all Tasks.
+     * Lists all Tasks as a String.
      */
-    public void list() {
+    public String list() {
+        String finalString = "";
         int counter = 1;
 
         for (Task task : tasks) {
-            System.out.println(counter + "." + task);
+            String taskString = counter + "." + task + "\n";
+            finalString += taskString;
             counter++;
         }
-
-        System.out.println();
+        return finalString;
     }
 
-    public void find(String keyword) {
+    /**
+     * Returns list of tasks with keyword as a String.
+     * @param keyword
+     */
+    public String find(String keyword) {
+        String finalString = "";
         int counter = 1;
+
         for (Task task : tasks) {
             if (task.contains(keyword)) {
-                System.out.println(counter + "." + task);
+                String taskString = counter + "." + task + "\n";
+                finalString += taskString;
                 counter++;
             }
         }
-        System.out.println();
+        return finalString;
     }
 
     /**
