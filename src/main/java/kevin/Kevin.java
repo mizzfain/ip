@@ -37,17 +37,20 @@ public class Kevin {
     /**
      * Runs the chatbot.
      */
-    public void run() throws KevinException {
+    public void run() {
         Parser parser = new Parser(ui.start());
 
         while (parser.isNotBye()) {
-            String response = respond(parser);
-            ui.print(response);
-            parser = new Parser(ui.readNextLine());
+            try {
+                String response = respond(parser);
+                ui.print(response);
+                parser = new Parser(ui.readNextLine());
+            } catch (KevinException e) {
+                ui.print(e.getMessage() + '\n');
+                parser = new Parser(ui.readNextLine());
+            }
         }
-
         ui.end();
-
     }
 
     public String respond(Parser parser) throws KevinException {
