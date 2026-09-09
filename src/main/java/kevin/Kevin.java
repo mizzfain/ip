@@ -44,7 +44,7 @@ public class Kevin {
         while (isNotBye) {
             String response = respond(parser);
             ui.print(response);
-            if (!parser.isNotBye()) {
+            if (parser.isBye()) {
                 break;
             }
             parser = new Parser(ui.readNextLine());
@@ -121,7 +121,7 @@ public class Kevin {
                 String keyword = parser.parseKeyword();
                 return tasks.find(keyword);
 
-            } else if (!parser.isNotBye()) {
+            } else if (parser.isBye()) {
                 return "Bye. Hope I was of assistance to you!";
             } else {
                 return "??? Sorry but I don't speak gibberish.\n";

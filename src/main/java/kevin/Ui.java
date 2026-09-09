@@ -20,8 +20,12 @@ public class Ui {
         System.out.println(output);
     }
 
+    /**
+     * Initialise UI and read
+     * @return
+     */
     public String start() {
-        System.out.println(START_BANNER);
+        print(START_BANNER);
         return readNextLine();
     }
 }
