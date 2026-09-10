@@ -17,8 +17,8 @@ public class Parser {
     /**
      * Checks if input is bye.
      */
-    public boolean isNotBye() {
-        return !input.equals("bye");
+    public boolean isBye() {
+        return input.equals("bye");
     }
 
     /**
