@@ -58,8 +58,8 @@ public class Kevin {
 
             } else if (parser.startsWith("mark")) {
                 int taskIndex = parser.parseIndex("mark");
-
                 Task markedTask = tasks.mark(taskIndex);
+
                 storage.save(tasks);
 
                 return "Nice! I've marked this task as done:\n  "
@@ -68,19 +68,21 @@ public class Kevin {
             } else if (parser.startsWith("unmark")) {
                 int taskIndex = parser.parseIndex("unmark");
                 Task unmarkedTask = tasks.unmark(taskIndex);
+
                 storage.save(tasks);
 
-                return "OK, I've marked this task as not done yet:\n  "
+                return "Huh...havent finish ah:\n  "
                         + unmarkedTask + "\n";
 
             } else if (parser.startsWith("todo")) {
                 String description = parser.parseToDo();
                 ToDo todo = new ToDo(description);
+
                 tasks.add(todo);
                 storage.save(tasks);
 
-                return "Got it. I've added this task:\n  " + todo
-                        + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+                return "Sigh...another one:\n  " + todo
+                        + "\n'Only' " + tasks.size() + " tasks left...\n";
 
             } else if (parser.startsWith("deadline")) {
                 Matcher matcher = parser.parseDeadline();
@@ -92,8 +94,8 @@ public class Kevin {
                 tasks.add(deadline);
                 storage.save(tasks);
 
-                return "Got it. I've added this task:\n  " + deadline
-                        + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+                return "Sigh...another one:\n  " + deadline
+                        + "\n'Only' " + tasks.size() + " tasks left...\n";
 
             } else if (parser.startsWith("event")) {
                 Matcher matcher = parser.parseEvent();
@@ -106,17 +108,18 @@ public class Kevin {
                 tasks.add(event);
                 storage.save(tasks);
 
-                return "Got it. I've added this task:\n  " + event
-                        + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+                return "Sigh...another one:\n  " + event
+                        + "\n'Only' " + tasks.size() + " tasks left...\n";
 
             } else if (parser.startsWith("delete")) {
                 int taskIndex = parser.parseIndex("delete");
                 Task deletedTask = tasks.delete(taskIndex);
+
                 storage.save(tasks);
 
-                return "Noted. I've removed this task:\n  "
-                        + deletedTask + "\nNow you have " + tasks.size()
-                        + " tasks in the list.\n";
+                return "Say goodbye to:\n  "
+                        + deletedTask + "\n'Only' " + tasks.size()
+                        + " tasks left...\n";
 
             } else if (parser.startsWith("find")) {
                 String keyword = parser.parseKeyword();
