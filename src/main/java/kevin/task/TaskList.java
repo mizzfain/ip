@@ -37,7 +37,7 @@ public class TaskList {
      */
     public Task delete(int taskIndex) throws KevinException {
         try {
-            //Checks that taskIndex is not negative
+            //taskIndex must be non-negative
             assert taskIndex >=0;
 
             Task task = tasks.get(taskIndex);
@@ -57,7 +57,7 @@ public class TaskList {
      */
     public Task mark(int taskIndex) throws KevinException {
         try {
-            //Checks that taskIndex is not negative
+            //taskIndex must be non-negative
             assert taskIndex >=0;
 
             Task markedTask = tasks.get(taskIndex).mark();
@@ -77,7 +77,7 @@ public class TaskList {
      */
     public Task unmark(int taskIndex) throws KevinException {
         try {
-            //Checks that taskIndex is not negative
+            //taskIndex must be non-negative
             assert taskIndex >=0;
 
             Task unmarkedTask = tasks.get(taskIndex).unmark();
@@ -130,11 +130,12 @@ public class TaskList {
     }
 
     /**
-     * Saves TaskList into tasks.txt.
-     * @param filePath
+     * Saves TaskList into filePath.
+     * Assumes filePath has a parent folder (data).
+     * @param filePaths
      */
     public void save(Path filePath) {
-        //Checks that parent (data) exists and is a folder
+        //Assumes parent (data) exists and is a folder
         Path folderPath = filePath.getParent();
         assert Files.exists(folderPath) && Files.isDirectory(folderPath);
 

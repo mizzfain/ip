@@ -97,8 +97,7 @@ public class Task {
      * @return Task
      */
     public static Task parseLine(String line) {
-
-        //Each task should contain the form 1 | <description> if done or 0 | <description> if not done
+        //Each task must contain the form 1 | <description> if done or 0 | <description> if not done
         assert line.contains("1 | ") | line.contains("0 | ");
 
         String[] parts = PIPE_SPLITTER.split(line);
@@ -106,7 +105,7 @@ public class Task {
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
 
-        //Each task should be of type ToDo, Deadline or Event
+        //Each task must be of type ToDo, Deadline or Event
         assert Set.of("T", "D", "E").contains(type);
 
         Task task = switch (type) {

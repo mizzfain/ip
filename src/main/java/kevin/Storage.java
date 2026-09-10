@@ -50,6 +50,7 @@ public class Storage {
 
     /**
      * Saves tasks into filePath.
+     * Assumes filePath has a parent folder (data).
      * @param TaskList tasks
      */
     public void save(TaskList tasks) {
