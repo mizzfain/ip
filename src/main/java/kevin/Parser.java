@@ -53,6 +53,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses keyword from find command.
+     * @return String keyword
+     * @throws KevinException If no keyword provided
+     */
     public String parseKeyword() throws KevinException {
         Pattern pattern = Pattern.compile("^find\\s+(.+)");
         Matcher matcher = pattern.matcher(input);
@@ -63,7 +68,6 @@ public class Parser {
             throw new KevinException("No keyword to search for.");
         }
     }
-
 
     /**
      * Parses ToDo from input.
