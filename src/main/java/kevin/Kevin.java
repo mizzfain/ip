@@ -62,7 +62,7 @@ public class Kevin {
 
                 storage.save(tasks);
 
-                return "Nice! I've marked this task as done:\n  "
+                return "Yay...finally done:\n  "
                         + markedTask + "\n";
 
             } else if (parser.startsWith("unmark")) {
