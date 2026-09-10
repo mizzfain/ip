@@ -37,6 +37,9 @@ public class TaskList {
      */
     public Task delete(int taskIndex) throws KevinException {
         try {
+            //Checks that taskIndex is not negative
+            assert taskIndex >=0;
+
             Task task = tasks.get(taskIndex);
             tasks.remove(taskIndex);
 
@@ -54,6 +57,9 @@ public class TaskList {
      */
     public Task mark(int taskIndex) throws KevinException {
         try {
+            //Checks that taskIndex is not negative
+            assert taskIndex >=0;
+
             Task markedTask = tasks.get(taskIndex).mark();
             tasks.set(taskIndex, markedTask);
 
@@ -71,6 +77,9 @@ public class TaskList {
      */
     public Task unmark(int taskIndex) throws KevinException {
         try {
+            //Checks that taskIndex is not negative
+            assert taskIndex >=0;
+
             Task unmarkedTask = tasks.get(taskIndex).unmark();
             tasks.set(taskIndex, unmarkedTask);
 
@@ -125,6 +134,10 @@ public class TaskList {
      * @param filePath
      */
     public void save(Path filePath) {
+        //Checks that parent (data) exists and is a folder
+        Path folderPath = filePath.getParent();
+        assert Files.exists(folderPath) && Files.isDirectory(folderPath);
+
         try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
             for (Task task : tasks) {
                 String taskString = task.formatSaveString();
