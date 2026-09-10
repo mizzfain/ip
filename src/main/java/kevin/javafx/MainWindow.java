@@ -27,10 +27,15 @@ public class MainWindow extends AnchorPane {
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Kevin Photo.jpg"));
     private Image kevinImage = new Image(this.getClass().getResourceAsStream("/images/Kevin Photo.jpg"));
+    private static final String START_BANNER =
+            "Hello! I'm Kevin.\nWhat would you like me to help you with?\n";
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        dialogContainer.getChildren().addAll(
+                DialogBox.getKevinDialog(START_BANNER, kevinImage)
+        );
     }
 
     /** Injects the Kevin instance */
