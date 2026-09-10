@@ -37,9 +37,6 @@ public class TaskList {
      */
     public Task delete(int taskIndex) throws KevinException {
         try {
-            //taskIndex must be non-negative
-            assert taskIndex >=0;
-
             Task task = tasks.get(taskIndex);
             tasks.remove(taskIndex);
 
@@ -57,9 +54,6 @@ public class TaskList {
      */
     public Task mark(int taskIndex) throws KevinException {
         try {
-            //taskIndex must be non-negative
-            assert taskIndex >=0;
-
             Task markedTask = tasks.get(taskIndex).mark();
             tasks.set(taskIndex, markedTask);
 
@@ -77,9 +71,6 @@ public class TaskList {
      */
     public Task unmark(int taskIndex) throws KevinException {
         try {
-            //taskIndex must be non-negative
-            assert taskIndex >=0;
-
             Task unmarkedTask = tasks.get(taskIndex).unmark();
             tasks.set(taskIndex, unmarkedTask);
 

@@ -47,10 +47,7 @@ public class Parser {
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {
-            int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
-            assert taskIndex >= 0; //Index cannot be negative
-
-            return taskIndex;
+            return Integer.parseInt(matcher.group(1)) - 1;
         } else {
             throw new KevinException("Must include a task number.");
         }

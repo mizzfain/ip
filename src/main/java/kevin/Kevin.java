@@ -58,6 +58,7 @@ public class Kevin {
 
             } else if (parser.startsWith("mark")) {
                 int taskIndex = parser.parseIndex("mark");
+
                 Task markedTask = tasks.mark(taskIndex);
                 storage.save(tasks);
 

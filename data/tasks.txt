@@ -1,4 +1,2 @@
 T | 0 | hm
 T | 1 | hi
-D | 0 | hm | 1 Jan 2025 130AM
-E | 0 | har | 1 Jan 2026 11AM | 1 Jan 2026 1130AM
