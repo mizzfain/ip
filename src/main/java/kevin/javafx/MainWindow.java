@@ -28,7 +28,7 @@ public class MainWindow extends AnchorPane {
 
     private Kevin kevin;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Kevin Photo.jpg"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User Icon.png"));
     private Image kevinImage = new Image(this.getClass().getResourceAsStream("/images/Kevin Photo.jpg"));
     private static final String START_BANNER =
             "Hello! I'm Kevin.\nWhat would you like me to help you with?\n";
