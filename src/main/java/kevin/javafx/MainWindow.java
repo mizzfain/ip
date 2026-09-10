@@ -29,9 +29,9 @@ public class MainWindow extends AnchorPane {
     private Kevin kevin;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User Icon.png"));
-    private Image kevinImage = new Image(this.getClass().getResourceAsStream("/images/Kevin Photo.jpg"));
-    private static final String START_BANNER =
-            "Hello! I'm Kevin.\nWhat would you like me to help you with?\n";
+    private Image kevinImage = new Image(this.getClass().getResourceAsStream("/images/Kevin Icon.png"));
+    private static final String START_BANNER = "Hello! I'm Kevin.\n"
+            + "What would you like me to help you with?\n";
 
     @FXML
     public void initialize() {
@@ -47,8 +47,10 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Creates two dialog boxes, one echoing user input and the other containing Kevin's reply
+     * Clears the user input after processing.
+     *
+     * If input is bye, disables userInput and sendButton, and closes GUI after 2 seconds.
      */
     @FXML
     private void handleUserInput() {
@@ -60,16 +62,16 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getKevinDialog(response, kevinImage)
         );
         userInput.clear();
-        if (parser.isBye()) {
-            PauseTransition delay = new PauseTransition(Duration.seconds(2));
 
-            // 2. Define what happens when the pause finishes
+        if (parser.isBye()) {
+            sendButton.setDisable(true);
+            userInput.setDisable(true);
+
+            PauseTransition delay = new PauseTransition(Duration.seconds(2));
             delay.setOnFinished(event -> {
                 Stage stage = (Stage) userInput.getScene().getWindow();
                 stage.close();
             });
-
-            // 3. Start the timer
             delay.play();
         }
     }
