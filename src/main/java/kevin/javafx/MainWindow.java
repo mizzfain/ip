@@ -1,5 +1,7 @@
 package kevin.javafx;
 
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import kevin.Kevin;
 import kevin.Parser;
 
@@ -50,12 +53,25 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = kevin.respond(new Parser(input));
+        Parser parser = new Parser(input);
+        String response = kevin.respond(parser);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getKevinDialog(response, kevinImage)
         );
         userInput.clear();
+        if (parser.isBye()) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(2));
+
+            // 2. Define what happens when the pause finishes
+            delay.setOnFinished(event -> {
+                Stage stage = (Stage) userInput.getScene().getWindow();
+                stage.close();
+            });
+
+            // 3. Start the timer
+            delay.play();
+        }
     }
 }
 
