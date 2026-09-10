@@ -107,7 +107,7 @@ public class Parser {
         if (matcher.matches()) {
             return matcher;
         } else {
-            throw new KevinException("Deadline does not have a description or a by date.");
+            throw new KevinException("Deadline does not have a description or a /by date.");
         }
     }
 
@@ -129,7 +129,7 @@ public class Parser {
         if (matcher.matches()) {
             return matcher;
         } else {
-            throw new KevinException("Event does not have a description, from or to date.");
+            throw new KevinException("Event does not have a description, /from or /to date.");
         }
     }
 }

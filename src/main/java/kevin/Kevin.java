@@ -51,6 +51,10 @@ public class Kevin {
         }
     }
 
+    /**
+     * Responds to input as a String.
+     * @param parser containing input
+     */
     public String respond(Parser parser) {
         try {
             if (parser.isList()) {
@@ -86,6 +90,8 @@ public class Kevin {
 
             } else if (parser.startsWith("deadline")) {
                 Matcher matcher = parser.parseDeadline();
+                //Matcher must have 2 groups for description and by
+                assert matcher.groupCount() == 2;
 
                 String description = matcher.group("description");
                 LocalDateTime byDateTime = parseDateTimeString(matcher.group("by"));
@@ -99,6 +105,7 @@ public class Kevin {
 
             } else if (parser.startsWith("event")) {
                 Matcher matcher = parser.parseEvent();
+                assert matcher.groupCount() == 3; //Matcher must have 3 groups for description, from and to
 
                 String description = matcher.group("description");
                 LocalDateTime from = parseDateTimeString(matcher.group("from"));
@@ -138,7 +145,7 @@ public class Kevin {
     /**
      * Main entry point for chatbot.
      */
-    public static void main(String[] args) throws KevinException {
+    public static void main(String[] args)  {
         new Kevin("data/tasks.txt").run();
     }
 
@@ -154,7 +161,7 @@ public class Kevin {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[d/M/yy hmma][d/M/yy ha]");
             return LocalDateTime.parse(dateTimeString, formatter);
         } catch (Exception e) {
-            throw new KevinException("Please input date time using D/M/YY Ham/pm or HMMam/pm");
+            throw new KevinException("Invalid datetime format. Please input date time using D/M/YY Ham/pm or HMMam/pm");
         }
     }
 }
