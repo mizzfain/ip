@@ -34,7 +34,7 @@ public class Storage {
         TaskList tasks = new TaskList();
 
         try {
-            ensureParentDirectoryExists(filePath);
+            ensureParentDirectoryExists();
             try (Stream<String> lines = Files.lines(filePath)) {
                 lines.map(Task::parseLine)
                         .forEach(tasks::add);
@@ -51,14 +51,14 @@ public class Storage {
      */
     public void save(TaskList tasks) {
         try {
-            ensureParentDirectoryExists(filePath);
+            ensureParentDirectoryExists();
             tasks.save(filePath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void ensureParentDirectoryExists(Path filePath) throws IOException {
+    public void ensureParentDirectoryExists() throws IOException {
         Path folderPath = filePath.getParent();
         if (folderPath != null) {
             Files.createDirectories(folderPath);

@@ -46,12 +46,16 @@ public class Task {
         return this.description.contains(keyword);
     }
 
+    public String addToList(String listString, int counter) {
+        return listString + counter + ". " + this + '\n';
+    }
+
     /**
      * Formats LocalDateTime object into String
      * Outputs as d MMM yyyy hmma e.g 12 Apr 2026 1130am.
      * If minutes is 0, exclude the minutes eg 12 Apr 2026 12pm.
      */
-    protected String formatDateTime(LocalDateTime dateTime) {
+    protected static String formatDateTime(LocalDateTime dateTime) {
         String pattern = "d MMM yyyy ";
 
         if (dateTime.getMinute() == 0) {
@@ -79,18 +83,6 @@ public class Task {
     }
 
     /**
-     * Formats Task into String for saving into tasks.txt.
-     * Output is 1/0 | description where 1 is done and 0 is not done.
-     */
-    public String formatSaveString() {
-        if (isDone) {
-            return "1 | " + description;
-        } else {
-            return "0 | " + description;
-        }
-    }
-
-    /**
      * Parses Task from line when loading tasks.txt.
      * @param line
      * @return Task
@@ -112,8 +104,16 @@ public class Task {
         return task;
     }
 
-    public String addToList(String listString, int counter) {
-        return listString + counter + ". " + this + '\n';
+    /**
+     * Formats Task into String for saving into tasks.txt.
+     * Output is 1/0 | description where 1 is done and 0 is not done.
+     */
+    public String formatSaveString() {
+        if (isDone) {
+            return "1 | " + description;
+        } else {
+            return "0 | " + description;
+        }
     }
 
     @Override
