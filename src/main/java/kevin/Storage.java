@@ -31,12 +31,7 @@ public class Storage {
         TaskList tasks = new TaskList();
 
         try {
-            Path folderPath = filePath.getParent();
-
-            if (folderPath != null) {
-                Files.createDirectories(folderPath);
-            }
-
+            ensureParentDirectoryExists();
             try (Stream<String> lines = Files.lines(filePath)) {
                 lines.map(Task::parseLine)
                         .forEach(tasks::add);
@@ -44,7 +39,6 @@ public class Storage {
         } catch (IOException e) {
             throw new KevinException(e.getMessage());
         }
-
         return tasks;
     }
 
@@ -59,5 +53,16 @@ public class Storage {
         assert Files.exists(folderPath) && Files.isDirectory(folderPath);
 
         tasks.save(filePath);
+    }
+
+    /**
+     * Ensures Parent Directory exists.
+     * @throws IOException If unable to create Parent Directory.
+     */
+    public void ensureParentDirectoryExists() throws IOException {
+        Path folderPath = filePath.getParent();
+        if (folderPath != null) {
+            Files.createDirectories(folderPath);
+        }
     }
 }

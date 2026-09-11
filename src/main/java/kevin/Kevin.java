@@ -61,72 +61,22 @@ public class Kevin {
                 return tasks.list();
 
             } else if (parser.startsWith("mark")) {
-                int taskIndex = parser.parseIndex("mark");
-                Task markedTask = tasks.mark(taskIndex);
-
-                storage.save(tasks);
-
-                return "Yay...finally done:\n  "
-                        + markedTask + "\n";
+                return handleMark(parser);
 
             } else if (parser.startsWith("unmark")) {
-                int taskIndex = parser.parseIndex("unmark");
-                Task unmarkedTask = tasks.unmark(taskIndex);
-
-                storage.save(tasks);
-
-                return "Huh...havent finish ah:\n  "
-                        + unmarkedTask + "\n";
+                return handleUnmark(parser);
 
             } else if (parser.startsWith("todo")) {
-                String description = parser.parseToDo();
-                ToDo todo = new ToDo(description);
-
-                tasks.add(todo);
-                storage.save(tasks);
-
-                return "Sigh...another one:\n  " + todo
-                        + "\n'Only' " + tasks.size() + " tasks left...\n";
+                return handleToDo(parser);
 
             } else if (parser.startsWith("deadline")) {
-                Matcher matcher = parser.parseDeadline();
-                //Matcher must have 2 groups for description and by
-                assert matcher.groupCount() == 2;
-
-                String description = matcher.group("description");
-                LocalDateTime byDateTime = parseDateTimeString(matcher.group("by"));
-
-                Deadline deadline = new Deadline(description, byDateTime);
-                tasks.add(deadline);
-                storage.save(tasks);
-
-                return "Sigh...another one:\n  " + deadline
-                        + "\n'Only' " + tasks.size() + " tasks left...\n";
+                return handleDeadline(parser);
 
             } else if (parser.startsWith("event")) {
-                Matcher matcher = parser.parseEvent();
-                assert matcher.groupCount() == 3; //Matcher must have 3 groups for description, from and to
-
-                String description = matcher.group("description");
-                LocalDateTime from = parseDateTimeString(matcher.group("from"));
-                LocalDateTime to = parseDateTimeString(matcher.group("to"));
-
-                Event event = new Event(description, from, to);
-                tasks.add(event);
-                storage.save(tasks);
-
-                return "Sigh...another one:\n  " + event
-                        + "\n'Only' " + tasks.size() + " tasks left...\n";
+                return handleEvent(parser);
 
             } else if (parser.startsWith("delete")) {
-                int taskIndex = parser.parseIndex("delete");
-                Task deletedTask = tasks.delete(taskIndex);
-
-                storage.save(tasks);
-
-                return "Say goodbye to:\n  "
-                        + deletedTask + "\n'Only' " + tasks.size()
-                        + " tasks left...\n";
+                return handleDelete(parser);
 
             } else if (parser.startsWith("find")) {
                 String keyword = parser.parseKeyword();
@@ -140,6 +90,115 @@ public class Kevin {
         } catch (KevinException e) {
             return e.getMessage() + '\n';
         }
+    }
+
+    /**
+     * Handles mark commands.
+     * Parses taskIndex, marks Task and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a task number.
+     */
+    public String handleMark(Parser parser) throws KevinException {
+        int taskIndex = parser.parseIndex("mark");
+        Task markedTask = tasks.mark(taskIndex);
+        storage.save(tasks);
+
+        return "Yay...finally done:\n  "
+                + markedTask + "\n";
+    }
+
+    /**
+     * Handles unmark commands.
+     * Parses taskIndex, unmarks Task and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a task number.
+     */
+    public String handleUnmark(Parser parser) throws KevinException {
+        int taskIndex = parser.parseIndex("unmark");
+        Task unmarkedTask = tasks.unmark(taskIndex);
+        storage.save(tasks);
+
+        return "Huh...havent finish ah:\n  "
+                + unmarkedTask + "\n";
+    }
+
+    /**
+     * Handles delete commands.
+     * Parses taskIndex, deletes Task and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a task number.
+     */
+    public String handleDelete(Parser parser) throws KevinException {
+        int taskIndex = parser.parseIndex("delete");
+        Task deletedTask = tasks.delete(taskIndex);
+        storage.save(tasks);
+
+        return "Say goodbye to:\n  "
+                + deletedTask + "\n'Only' " + tasks.size()
+                + " tasks left...\n";
+    }
+
+    /**
+     * Handles ToDo commands.
+     * Parses description, adds ToDo to TaskList and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a description or a /by date.
+     */
+    public String handleToDo(Parser parser) throws KevinException {
+        String description = parser.parseToDo();
+        ToDo todo = new ToDo(description);
+        tasks.add(todo);
+        storage.save(tasks);
+
+        return "Sigh...another one:\n  " + todo
+                + "\n'Only' " + tasks.size() + " tasks left...\n";
+    }
+
+    /**
+     * Handles Deadline commands.
+     * Parses description, by date, adds Deadline to TaskList and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a description or a /by date.
+     */
+    public String handleDeadline(Parser parser) throws KevinException {
+        Matcher matcher = parser.parseDeadline();
+
+        String description = matcher.group("description");
+        LocalDateTime byDateTime = parseDateTimeString(matcher.group("by"));
+        Deadline deadline = new Deadline(description, byDateTime);
+
+        tasks.add(deadline);
+        storage.save(tasks);
+
+        return "Sigh...another one:\n  " + deadline
+                + "\n'Only' " + tasks.size() + " tasks left...\n";
+    }
+
+    /**
+     * Handles Event commands.
+     * Parses description, from and to date, adds Event to TaskList and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a description, /from date or /to date.
+     */
+    public String handleEvent(Parser parser) throws KevinException {
+        Matcher matcher = parser.parseEvent();
+
+        String description = matcher.group("description");
+        LocalDateTime from = parseDateTimeString(matcher.group("from"));
+        LocalDateTime to = parseDateTimeString(matcher.group("to"));
+        Event event = new Event(description, from, to);
+
+        tasks.add(event);
+        storage.save(tasks);
+
+        return "Sigh...another one:\n  " + event
+                + "\n'Only' " + tasks.size() + " tasks left...\n";
     }
 
     /**

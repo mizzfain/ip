@@ -36,16 +36,18 @@ public class Parser {
         return input.startsWith(command);
     }
 
+    public Matcher parseInput(String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(input);
+    }
+
     /**
      * Parses index from input of the form <command> <index>.
      * @param command
-     * @return index
-     * @throws KevinException If no index in input.
+     * @throws KevinException If input does not have a task number.
      */
     public int parseIndex(String command) throws KevinException {
-        Pattern pattern = Pattern.compile(command + "\\s+(\\d+)");
-        Matcher matcher = pattern.matcher(input);
-
+        Matcher matcher = parseInput(command + "\\s+(\\d+)");
         if (matcher.matches()) {
             return Integer.parseInt(matcher.group(1)) - 1;
         } else {
@@ -54,17 +56,14 @@ public class Parser {
     }
 
     /**
-     * Parses keyword from find command.
-     * @return String keyword
+     * Parses keyword in find command.
      * @throws KevinException If no keyword provided
      */
     public String parseKeyword() throws KevinException {
         //Input must start with find
         assert input.startsWith("find");
 
-        Pattern pattern = Pattern.compile("^find\\s+(.+)");
-        Matcher matcher = pattern.matcher(input);
-
+        Matcher matcher = parseInput("^find\\s+(.+)");
         if (matcher.matches()) {
             return matcher.group(1);
         } else {
@@ -81,9 +80,7 @@ public class Parser {
         //Input must start with todo
         assert input.startsWith("todo");
 
-        Pattern pattern = Pattern.compile("^todo\\s+(?<description>.+?)$");
-        Matcher matcher = pattern.matcher(input);
-
+        Matcher matcher = parseInput("^todo\\s+(?<description>.+?)$");
         if (matcher.matches()) {
             return matcher.group("description");
         } else {
@@ -101,8 +98,7 @@ public class Parser {
         assert input.startsWith("deadline");
 
         String regex = "^deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
+        Matcher matcher = parseInput(regex);
 
         if (matcher.matches()) {
             return matcher;
@@ -123,8 +119,7 @@ public class Parser {
         String regex = "^event\\s+(?<description>.+?)\\s+"
                 + "/from\\s+(?<from>.+?)\\s+"
                 + "/to\\s+(?<to>.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
+        Matcher matcher = parseInput(regex);
 
         if (matcher.matches()) {
             return matcher;

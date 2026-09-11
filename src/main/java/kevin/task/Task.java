@@ -43,8 +43,23 @@ public class Task {
         return this;
     }
 
+    /**
+     * Checks if Task description contains keyword.
+     * @param keyword
+     * @return boolean
+     */
     public boolean contains(String keyword) {
         return this.description.contains(keyword);
+    }
+
+    /**
+     * Adds Task to list of Tasks as a String.
+     * @param listString
+     * @param counter
+     * @return String updated list of Tasks.
+     */
+    public String addToList(String listString, int counter) {
+        return listString + counter + ". " + this + '\n';
     }
 
     /**
@@ -52,7 +67,7 @@ public class Task {
      * Outputs as d MMM yyyy hmma e.g 12 Apr 2026 1130am.
      * If minutes is 0, exclude the minutes eg 12 Apr 2026 12pm.
      */
-    protected String formatDateTime(LocalDateTime dateTime) {
+    protected static String formatDateTime(LocalDateTime dateTime) {
         String pattern = "d MMM yyyy ";
 
         if (dateTime.getMinute() == 0) {
@@ -77,18 +92,6 @@ public class Task {
                 appendPattern("a").
                 toFormatter(Locale.ENGLISH);
         return LocalDateTime.parse(dateTimeString, formatter);
-    }
-
-    /**
-     * Formats Task into String for saving into tasks.txt.
-     * Output is 1/0 | description where 1 is done and 0 is not done.
-     */
-    public String formatSaveString() {
-        if (isDone) {
-            return "1 | " + description;
-        } else {
-            return "0 | " + description;
-        }
     }
 
     /**
@@ -117,6 +120,18 @@ public class Task {
         };
 
         return task;
+    }
+
+    /**
+     * Formats Task into String for saving into tasks.txt.
+     * Output is 1/0 | description where 1 is done and 0 is not done.
+     */
+    public String formatSaveString() {
+        if (isDone) {
+            return "1 | " + description;
+        } else {
+            return "0 | " + description;
+        }
     }
 
     @Override
