@@ -1,4 +1,1 @@
-T | 0 | test
-E | 0 | cs2106 midterm | 10 Sep 2026 130PM | 10 Sep 2026 330PM
-T | 0 | second test
-D | 0 | hm | 1 Jan 2026 1PM
+T | 0 | hm
