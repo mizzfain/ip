@@ -35,7 +35,6 @@ public class Storage {
 
         try {
             Path folderPath = filePath.getParent();
-
             if (folderPath != null) {
                 Files.createDirectories(folderPath);
             }
@@ -47,7 +46,6 @@ public class Storage {
         } catch (IOException e) {
             throw new KevinException(e.getMessage());
         }
-
         return tasks;
     }
 
@@ -58,7 +56,6 @@ public class Storage {
     public void save(TaskList tasks) {
         try {
             Path folderPath = filePath.getParent();
-
             if (folderPath != null) {
                 Files.createDirectories(folderPath);
             }

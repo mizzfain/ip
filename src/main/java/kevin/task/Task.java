@@ -112,6 +112,10 @@ public class Task {
         return task;
     }
 
+    public String addToList(String listString, int counter) {
+        return listString + counter + ". " + this + '\n';
+    }
+
     @Override
     public String toString() {
         if (isDone) {

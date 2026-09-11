@@ -88,8 +88,7 @@ public class TaskList {
         int counter = 1;
 
         for (Task task : tasks) {
-            String taskString = counter + "." + task + "\n";
-            finalString += taskString;
+            finalString = task.addToList(finalString, counter);
             counter++;
         }
         return finalString;
@@ -105,8 +104,7 @@ public class TaskList {
 
         for (Task task : tasks) {
             if (task.contains(keyword)) {
-                String taskString = counter + "." + task + "\n";
-                finalString += taskString;
+                finalString = task.addToList(finalString, counter);
                 counter++;
             }
         }
