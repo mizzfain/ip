@@ -54,9 +54,8 @@ public class Storage {
      * @param TaskList tasks
      */
     public void save(TaskList tasks) {
-        Path folderPath = filePath.getParent();
-
         //Checks that parent (data) exists and is a folder
+        Path folderPath = filePath.getParent();
         assert Files.exists(folderPath) && Files.isDirectory(folderPath);
 
         tasks.save(filePath);
