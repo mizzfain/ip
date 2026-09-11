@@ -2,6 +2,7 @@ package kevin;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 
 import kevin.task.Deadline;
@@ -57,65 +58,22 @@ public class Kevin {
                 return tasks.list();
 
             } else if (parser.startsWith("mark")) {
-                int taskIndex = parser.parseIndex("mark");
-                Task markedTask = tasks.mark(taskIndex);
-                storage.save(tasks);
-
-                return "Nice! I've marked this task as done:\n  "
-                        + markedTask + "\n";
+                return handleMark(parser);
 
             } else if (parser.startsWith("unmark")) {
-                int taskIndex = parser.parseIndex("unmark");
-                Task unmarkedTask = tasks.unmark(taskIndex);
-                storage.save(tasks);
-
-                return "OK, I've marked this task as not done yet:\n  "
-                        + unmarkedTask + "\n";
+                return handleUnmark(parser);
 
             } else if (parser.startsWith("todo")) {
-                String description = parser.parseToDo();
-                ToDo todo = new ToDo(description);
-                tasks.add(todo);
-                storage.save(tasks);
-
-                return "Got it. I've added this task:\n  " + todo
-                        + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+                return handleToDo(parser);
 
             } else if (parser.startsWith("deadline")) {
-                Matcher matcher = parser.parseDeadline();
-
-                String description = matcher.group("description");
-                LocalDateTime byDateTime = parseDateTimeString(matcher.group("by"));
-
-                Deadline deadline = new Deadline(description, byDateTime);
-                tasks.add(deadline);
-                storage.save(tasks);
-
-                return "Got it. I've added this task:\n  " + deadline
-                        + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+                return handleDeadline(parser);
 
             } else if (parser.startsWith("event")) {
-                Matcher matcher = parser.parseEvent();
-
-                String description = matcher.group("description");
-                LocalDateTime from = parseDateTimeString(matcher.group("from"));
-                LocalDateTime to = parseDateTimeString(matcher.group("to"));
-
-                Event event = new Event(description, from, to);
-                tasks.add(event);
-                storage.save(tasks);
-
-                return "Got it. I've added this task:\n  " + event
-                        + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+                return handleEvent(parser);
 
             } else if (parser.startsWith("delete")) {
-                int taskIndex = parser.parseIndex("delete");
-                Task deletedTask = tasks.delete(taskIndex);
-                storage.save(tasks);
-
-                return "Noted. I've removed this task:\n  "
-                        + deletedTask + "\nNow you have " + tasks.size()
-                        + " tasks in the list.\n";
+                return handleDelete(parser);
 
             } else if (parser.startsWith("find")) {
                 String keyword = parser.parseKeyword();
@@ -129,6 +87,73 @@ public class Kevin {
         } catch (KevinException e) {
             return e.getMessage() + '\n';
         }
+    }
+
+    public String handleMark(Parser parser) throws KevinException {
+        int taskIndex = parser.parseIndex("mark");
+        Task markedTask = tasks.mark(taskIndex);
+        storage.save(tasks);
+
+        return "Nice! I've marked this task as done:\n  "
+                + markedTask + "\n";
+    }
+
+    public String handleUnmark(Parser parser) throws KevinException {
+        int taskIndex = parser.parseIndex("unmark");
+        Task unmarkedTask = tasks.unmark(taskIndex);
+        storage.save(tasks);
+
+        return "OK, I've marked this task as not done yet:\n  "
+                + unmarkedTask + "\n";
+    }
+
+    public String handleDelete(Parser parser) throws KevinException {
+        int taskIndex = parser.parseIndex("delete");
+        Task deletedTask = tasks.delete(taskIndex);
+        storage.save(tasks);
+
+        return "Noted. I've removed this task:\n  "
+                + deletedTask + "\nNow you have " + tasks.size()
+                + " tasks in the list.\n";
+    }
+
+    public String handleToDo(Parser parser) throws KevinException {
+        String description = parser.parseToDo();
+        ToDo todo = new ToDo(description);
+        tasks.add(todo);
+        storage.save(tasks);
+
+        return "Got it. I've added this task:\n  " + todo
+                + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+    }
+
+    public String handleDeadline(Parser parser) throws KevinException {
+        Matcher matcher = parser.parseDeadline();
+
+        String description = matcher.group("description");
+        LocalDateTime byDateTime = parseDateTimeString(matcher.group("by"));
+        Deadline deadline = new Deadline(description, byDateTime);
+
+        tasks.add(deadline);
+        storage.save(tasks);
+
+        return "Got it. I've added this task:\n  " + deadline
+                + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+    }
+
+    public String handleEvent(Parser parser) throws KevinException {
+        Matcher matcher = parser.parseEvent();
+
+        String description = matcher.group("description");
+        LocalDateTime from = parseDateTimeString(matcher.group("from"));
+        LocalDateTime to = parseDateTimeString(matcher.group("to"));
+        Event event = new Event(description, from, to);
+
+        tasks.add(event);
+        storage.save(tasks);
+
+        return "Got it. I've added this task:\n  " + event
+                + "\nNow you have " + tasks.size() + " tasks in the list.\n";
     }
 
     /**

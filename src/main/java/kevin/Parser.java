@@ -36,6 +36,11 @@ public class Parser {
         return input.startsWith(command);
     }
 
+    public Matcher parseInput(String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(input);
+    }
+
     /**
      * Parses index from input of the form command index.
      * @param command
@@ -107,10 +112,5 @@ public class Parser {
         } else {
             throw new KevinException("Event does not have a description, from or to date.");
         }
-    }
-
-    public Matcher parseInput(String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(input);
     }
 }
