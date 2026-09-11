@@ -42,10 +42,21 @@ public class Task {
         return this;
     }
 
+    /**
+     * Checks if Task description contains keyword.
+     * @param keyword
+     * @return boolean
+     */
     public boolean contains(String keyword) {
         return this.description.contains(keyword);
     }
 
+    /**
+     * Adds Task to list of Tasks as a String.
+     * @param listString
+     * @param counter
+     * @return String updated list of Tasks.
+     */
     public String addToList(String listString, int counter) {
         return listString + counter + ". " + this + '\n';
     }

@@ -119,7 +119,7 @@ public class TaskList {
     }
 
     /**
-     * Saves TaskList into tasks.txt.
+     * Saves TaskList in filePath.
      * @param filePath
      */
     public void save(Path filePath) {

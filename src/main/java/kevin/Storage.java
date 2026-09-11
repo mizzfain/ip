@@ -58,6 +58,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Ensures Parent Directory exists.
+     * @throws IOException If unable to create Parent Directory.
+     */
     public void ensureParentDirectoryExists() throws IOException {
         Path folderPath = filePath.getParent();
         if (folderPath != null) {

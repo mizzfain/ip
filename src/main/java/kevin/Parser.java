@@ -44,7 +44,6 @@ public class Parser {
     /**
      * Parses index from input of the form command index.
      * @param command
-     * @return index
      * @throws KevinException If input does not have a task number.
      */
     public int parseIndex(String command) throws KevinException {
@@ -56,6 +55,10 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses keyword in find command to search through TaskList.
+     * @throws KevinException
+     */
     public String parseKeyword() throws KevinException {
         Matcher matcher = parseInput("^find\\s+(.+)");
         if (matcher.matches()) {
