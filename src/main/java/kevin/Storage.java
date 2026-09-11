@@ -21,14 +21,11 @@ public class Storage {
         this.filePath = Paths.get(filePathString);
     }
 
+
     /**
-     * Loads TaskList from tasks.txt.
+     * Loads TaskList from filePath.
      * @return TaskList
-     */
-    /**
-     * Loads TaskList from tasks.txt.
-     * @return TaskList
-     * @throws KevinException If tasks.txt does not exist.
+     * @throws KevinException If filePath does not exist.
      */
     public TaskList load() throws KevinException {
         TaskList tasks = new TaskList();
@@ -52,20 +49,15 @@ public class Storage {
     }
 
     /**
-     * Saves tasks into tasks.txt.
+     * Saves tasks into filePath.
+     * Assumes filePath has a parent folder (data).
      * @param TaskList tasks
      */
     public void save(TaskList tasks) {
-        try {
-            Path folderPath = filePath.getParent();
+        //Checks that parent (data) exists and is a folder
+        Path folderPath = filePath.getParent();
+        assert Files.exists(folderPath) && Files.isDirectory(folderPath);
 
-            if (folderPath != null) {
-                Files.createDirectories(folderPath);
-            }
-
-            tasks.save(filePath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        tasks.save(filePath);
     }
 }
