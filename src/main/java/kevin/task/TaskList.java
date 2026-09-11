@@ -119,10 +119,16 @@ public class TaskList {
     }
 
     /**
+
      * Saves TaskList in filePath.
+     * Assumes filePath has a parent folder (data).
      * @param filePath
      */
     public void save(Path filePath) {
+        //Assumes parent (data) exists and is a folder
+        Path folderPath = filePath.getParent();
+        assert Files.exists(folderPath) && Files.isDirectory(folderPath);
+
         try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
             for (Task task : tasks) {
                 String taskString = task.formatSaveString();

@@ -53,7 +53,7 @@ public class Kevin {
 
     /**
      * Responds to input as a String.
-     * @param parser
+     * @param parser containing input
      */
     public String respond(Parser parser) {
         try {
@@ -104,7 +104,7 @@ public class Kevin {
         Task markedTask = tasks.mark(taskIndex);
         storage.save(tasks);
 
-        return "Nice! I've marked this task as done:\n  "
+        return "Yay...finally done:\n  "
                 + markedTask + "\n";
     }
 
@@ -120,7 +120,7 @@ public class Kevin {
         Task unmarkedTask = tasks.unmark(taskIndex);
         storage.save(tasks);
 
-        return "OK, I've marked this task as not done yet:\n  "
+        return "Huh...havent finish ah:\n  "
                 + unmarkedTask + "\n";
     }
 
@@ -136,9 +136,9 @@ public class Kevin {
         Task deletedTask = tasks.delete(taskIndex);
         storage.save(tasks);
 
-        return "Noted. I've removed this task:\n  "
-                + deletedTask + "\nNow you have " + tasks.size()
-                + " tasks in the list.\n";
+        return "Say goodbye to:\n  "
+                + deletedTask + "\n'Only' " + tasks.size()
+                + " tasks left...\n";
     }
 
     /**
@@ -154,8 +154,8 @@ public class Kevin {
         tasks.add(todo);
         storage.save(tasks);
 
-        return "Got it. I've added this task:\n  " + todo
-                + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+        return "Sigh...another one:\n  " + todo
+                + "\n'Only' " + tasks.size() + " tasks left...\n";
     }
 
     /**
@@ -175,8 +175,8 @@ public class Kevin {
         tasks.add(deadline);
         storage.save(tasks);
 
-        return "Got it. I've added this task:\n  " + deadline
-                + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+        return "Sigh...another one:\n  " + deadline
+                + "\n'Only' " + tasks.size() + " tasks left...\n";
     }
 
     /**
@@ -197,14 +197,14 @@ public class Kevin {
         tasks.add(event);
         storage.save(tasks);
 
-        return "Got it. I've added this task:\n  " + event
-                + "\nNow you have " + tasks.size() + " tasks in the list.\n";
+        return "Sigh...another one:\n  " + event
+                + "\n'Only' " + tasks.size() + " tasks left...\n";
     }
 
     /**
      * Main entry point for chatbot.
      */
-    public static void main(String[] args) throws KevinException {
+    public static void main(String[] args)  {
         new Kevin("data/tasks.txt").run();
     }
 
@@ -220,7 +220,7 @@ public class Kevin {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[d/M/yy hmma][d/M/yy ha]");
             return LocalDateTime.parse(dateTimeString, formatter);
         } catch (Exception e) {
-            throw new KevinException("Please input date time using D/M/YY Ham/pm or HMMam/pm");
+            throw new KevinException("Invalid datetime format. Please input date time using D/M/YY Ham/pm or HMMam/pm");
         }
     }
 }

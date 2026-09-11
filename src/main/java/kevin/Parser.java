@@ -42,7 +42,7 @@ public class Parser {
     }
 
     /**
-     * Parses index from input of the form command index.
+     * Parses index from input of the form <command> <index>.
      * @param command
      * @throws KevinException If input does not have a task number.
      */
@@ -56,10 +56,13 @@ public class Parser {
     }
 
     /**
-     * Parses keyword in find command to search through TaskList.
-     * @throws KevinException
+     * Parses keyword in find command.
+     * @throws KevinException If no keyword provided
      */
     public String parseKeyword() throws KevinException {
+        //Input must start with find
+        assert input.startsWith("find");
+
         Matcher matcher = parseInput("^find\\s+(.+)");
         if (matcher.matches()) {
             return matcher.group(1);
@@ -68,13 +71,15 @@ public class Parser {
         }
     }
 
-
     /**
      * Parses ToDo from input.
      * @return description
      * @throws KevinException If input does not have a description.
      */
     public String parseToDo() throws KevinException {
+        //Input must start with todo
+        assert input.startsWith("todo");
+
         Matcher matcher = parseInput("^todo\\s+(?<description>.+?)$");
         if (matcher.matches()) {
             return matcher.group("description");
@@ -89,13 +94,16 @@ public class Parser {
      * @throws KevinException If input does not have a description or /by date.
      */
     public Matcher parseDeadline() throws KevinException {
+        //Input must start with deadline
+        assert input.startsWith("deadline");
+
         String regex = "^deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
         Matcher matcher = parseInput(regex);
 
         if (matcher.matches()) {
             return matcher;
         } else {
-            throw new KevinException("Deadline does not have a description or a by date.");
+            throw new KevinException("Deadline does not have a description or a /by date.");
         }
     }
 
@@ -105,6 +113,9 @@ public class Parser {
      * @throws KevinException If input does not have a description, /from date or /to date.
      */
     public Matcher parseEvent() throws KevinException {
+        //Input must start with event
+        assert input.startsWith("event");
+
         String regex = "^event\\s+(?<description>.+?)\\s+"
                 + "/from\\s+(?<from>.+?)\\s+"
                 + "/to\\s+(?<to>.+)$";
@@ -113,7 +124,7 @@ public class Parser {
         if (matcher.matches()) {
             return matcher;
         } else {
-            throw new KevinException("Event does not have a description, from or to date.");
+            throw new KevinException("Event does not have a description, /from or /to date.");
         }
     }
 }
