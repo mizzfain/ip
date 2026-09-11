@@ -45,7 +45,7 @@ public class Parser {
      * Parses index from input of the form command index.
      * @param command
      * @return index
-     * @throws KevinException If no index in input.
+     * @throws KevinException If input does not have a task number.
      */
     public int parseIndex(String command) throws KevinException {
         Matcher matcher = parseInput(command + "\\s+(\\d+)");

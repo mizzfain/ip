@@ -52,6 +52,10 @@ public class Kevin {
         }
     }
 
+    /**
+     * Responds to input as a String.
+     * @param parser
+     */
     public String respond(Parser parser) {
         try {
             if (parser.isList()) {
@@ -89,6 +93,13 @@ public class Kevin {
         }
     }
 
+    /**
+     * Handles mark commands.
+     * Parses taskIndex, marks Task and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a task number.
+     */
     public String handleMark(Parser parser) throws KevinException {
         int taskIndex = parser.parseIndex("mark");
         Task markedTask = tasks.mark(taskIndex);
@@ -98,6 +109,13 @@ public class Kevin {
                 + markedTask + "\n";
     }
 
+    /**
+     * Handles unmark commands.
+     * Parses taskIndex, unmarks Task and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a task number.
+     */
     public String handleUnmark(Parser parser) throws KevinException {
         int taskIndex = parser.parseIndex("unmark");
         Task unmarkedTask = tasks.unmark(taskIndex);
@@ -107,6 +125,13 @@ public class Kevin {
                 + unmarkedTask + "\n";
     }
 
+    /**
+     * Handles delete commands.
+     * Parses taskIndex, deletes Task and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a task number.
+     */
     public String handleDelete(Parser parser) throws KevinException {
         int taskIndex = parser.parseIndex("delete");
         Task deletedTask = tasks.delete(taskIndex);
@@ -117,6 +142,13 @@ public class Kevin {
                 + " tasks in the list.\n";
     }
 
+    /**
+     * Handles ToDo commands.
+     * Parses description, adds ToDo to TaskList and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a description or a /by date.
+     */
     public String handleToDo(Parser parser) throws KevinException {
         String description = parser.parseToDo();
         ToDo todo = new ToDo(description);
@@ -127,6 +159,13 @@ public class Kevin {
                 + "\nNow you have " + tasks.size() + " tasks in the list.\n";
     }
 
+    /**
+     * Handles Deadline commands.
+     * Parses description, by date, adds Deadline to TaskList and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a description or a /by date.
+     */
     public String handleDeadline(Parser parser) throws KevinException {
         Matcher matcher = parser.parseDeadline();
 
@@ -141,6 +180,13 @@ public class Kevin {
                 + "\nNow you have " + tasks.size() + " tasks in the list.\n";
     }
 
+    /**
+     * Handles Event commands.
+     * Parses description, from and to date, adds Event to TaskList and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If input does not have a description, /from date or /to date.
+     */
     public String handleEvent(Parser parser) throws KevinException {
         Matcher matcher = parser.parseEvent();
 
