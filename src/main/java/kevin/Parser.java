@@ -60,7 +60,17 @@ public class Parser {
         if (matcher.find()) {
             return matcher.group("by");
         } else {
-            throw new KevinException("No /by date.");
+            throw new KevinException("No by date.");
+        }
+    }
+
+    public Matcher parseFromAndToDate() throws KevinException {
+        Matcher matcher = parseInput("/from\\s+(?<from>.+?)\\s+"
+                + "/to\\s+(?<to>.+)$");
+        if (matcher.find()) {
+            return matcher;
+        } else {
+            throw new KevinException("No from or to date.");
         }
     }
 
@@ -79,13 +89,6 @@ public class Parser {
             throw new KevinException("No keyword to search for.");
         }
     }
-/*
-    public String parseSnooze() throws KevinException {
-        //Input must start with todo
-        assert input.startsWith("snooze");
-
-        Matcher matcher = parseInput()
-    }*/
 
     /**
      * Parses ToDo from input.
