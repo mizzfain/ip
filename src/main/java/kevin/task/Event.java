@@ -21,6 +21,11 @@ public class Event extends Task {
         this.end = end;
     }
 
+    public Event reschedule(LocalDateTime newStart, LocalDateTime newEnd) {
+        this.start = newStart;
+        this.end = newEnd;
+    }
+
     @Override
     public String formatSaveString() {
         return "E | " + super.formatSaveString() + " | " + formatDateTime(start)

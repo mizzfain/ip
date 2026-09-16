@@ -18,6 +18,10 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    public Deadline postpone(LocalDateTime newBy) {
+        this.by = newBy;
+    }
+
     @Override
     public String formatSaveString() {
         return "D | " + super.formatSaveString() + " | " + formatDateTime(by);
