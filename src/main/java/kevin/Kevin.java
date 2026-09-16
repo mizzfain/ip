@@ -131,7 +131,6 @@ public class Kevin {
         int taskIndex = parser.parseIndex("snooze");
         Task taskToSnooze = tasks.get(taskIndex);
 
-        parser = new Parser(ui.readNextLine());
         if (taskToSnooze instanceof Deadline deadline) {
             LocalDateTime byDate = parseDateTimeString(parser.parseByDate());
             deadline.postpone(byDate);

@@ -48,7 +48,7 @@ public class Parser {
      */
     public int parseIndex(String command) throws KevinException {
         Matcher matcher = parseInput(command + "\\s+(\\d+)");
-        if (matcher.matches()) {
+        if (matcher.find()) {
             return Integer.parseInt(matcher.group(1)) - 1;
         } else {
             throw new KevinException("Must include a task number.");
@@ -56,11 +56,8 @@ public class Parser {
     }
 
     public String parseByDate() throws KevinException {
-        //Input must start with find
-        assert input.startsWith("/by");
-
-        Matcher matcher = parseInput("^/by\\s+(?<by>.+)$");
-        if (matcher.matches()) {
+        Matcher matcher = parseInput("/by\\s+(?<by>.+)$");
+        if (matcher.find()) {
             return matcher.group("by");
         } else {
             throw new KevinException("No /by date.");
