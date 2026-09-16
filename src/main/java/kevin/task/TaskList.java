@@ -119,6 +119,10 @@ public class TaskList {
         return finalString;
     }
 
+    public Task get(int taskIndex) {
+        return tasks.get(taskIndex);
+    }
+
     /**
      * Returns number of Tasks in current TaskList.
      */

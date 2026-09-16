@@ -55,6 +55,18 @@ public class Parser {
         }
     }
 
+    public String parseByDate() throws KevinException {
+        //Input must start with find
+        assert input.startsWith("/by");
+
+        Matcher matcher = parseInput("^/by\\s+(?<by>.+)$");
+        if (matcher.matches()) {
+            return matcher.group("by");
+        } else {
+            throw new KevinException("No /by date.");
+        }
+    }
+
     /**
      * Parses keyword in find command.
      * @throws KevinException If no keyword provided
@@ -70,6 +82,13 @@ public class Parser {
             throw new KevinException("No keyword to search for.");
         }
     }
+/*
+    public String parseSnooze() throws KevinException {
+        //Input must start with todo
+        assert input.startsWith("snooze");
+
+        Matcher matcher = parseInput()
+    }*/
 
     /**
      * Parses ToDo from input.

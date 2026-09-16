@@ -82,6 +82,9 @@ public class Kevin {
                 String keyword = parser.parseKeyword();
                 return tasks.find(keyword);
 
+            } else if (parser.startsWith("snooze")) {
+              return handleSnooze(parser);
+
             } else if (parser.isBye()) {
                 return "Bye. Hope I was of assistance to you!";
             } else {
@@ -122,6 +125,20 @@ public class Kevin {
 
         return "Huh...havent finish ah:\n  "
                 + unmarkedTask + "\n";
+    }
+
+    public String handleSnooze(Parser parser) throws KevinException {
+        int taskIndex = parser.parseIndex("snooze");
+        Task taskToSnooze = tasks.get(taskIndex);
+
+        parser = new Parser(ui.readNextLine());
+        if (taskToSnooze instanceof Deadline deadline) {
+            LocalDateTime byDate = parseDateTimeString(parser.parseByDate());
+            deadline.postpone(byDate);
+        }
+        storage.save(tasks);
+
+        return "Snoozed:\n  " + taskToSnooze + "\n";
     }
 
     /**
