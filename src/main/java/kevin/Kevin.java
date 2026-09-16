@@ -127,6 +127,13 @@ public class Kevin {
                 + unmarkedTask + "\n";
     }
 
+    /**
+     * Handles snooze commands.
+     * Parses taskIndex, snoozes task to later date and saves updated TaskList.
+     * @param parser
+     * @return String response
+     * @throws KevinException If try to snooze a Task with no date eg ToDo.
+     */
     public String handleSnooze(Parser parser) throws KevinException {
         int taskIndex = parser.parseIndex("snooze");
         Task taskToSnooze = tasks.get(taskIndex);
@@ -143,6 +150,7 @@ public class Kevin {
         } else {
             throw new KevinException("Cannot snooze a task with no date.");
         }
+
         storage.save(tasks);
 
         return "Snoozed:\n  " + taskToSnooze + "\n";
@@ -233,10 +241,7 @@ public class Kevin {
     }
 
     /**
-     * Helper Function in run().
      * Parses DateTimeString from the user input into LocalDateTime.
-     * @param dateTimeString
-     * @return LocalDateTime
      * @throws KevinException If user input wrong format for date time.
      */
     public static LocalDateTime parseDateTimeString(String dateTimeString) throws KevinException {

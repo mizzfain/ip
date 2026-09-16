@@ -45,7 +45,7 @@ public class TaskList {
      */
     public Task mark(int taskIndex) throws KevinException {
         try {
-            Task markedTask = tasks.get(taskIndex).mark();
+            Task markedTask = get(taskIndex).mark();
             this.replace(taskIndex, markedTask);
 
             return markedTask;
@@ -62,7 +62,7 @@ public class TaskList {
      */
     public Task unmark(int taskIndex) throws KevinException {
         try {
-            Task unmarkedTask = tasks.get(taskIndex).unmark();
+            Task unmarkedTask = get(taskIndex).unmark();
             this.replace(taskIndex, unmarkedTask);
 
             return unmarkedTask;
@@ -79,7 +79,7 @@ public class TaskList {
      */
     public Task delete(int taskIndex) throws KevinException {
         try {
-            Task task = tasks.get(taskIndex);
+            Task task = get(taskIndex);
             tasks.remove(taskIndex);
 
             return task;
