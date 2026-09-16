@@ -48,10 +48,29 @@ public class Parser {
      */
     public int parseIndex(String command) throws KevinException {
         Matcher matcher = parseInput(command + "\\s+(\\d+)");
-        if (matcher.matches()) {
+        if (matcher.find()) {
             return Integer.parseInt(matcher.group(1)) - 1;
         } else {
             throw new KevinException("Must include a task number.");
+        }
+    }
+
+    public String parseByDate() throws KevinException {
+        Matcher matcher = parseInput("/by\\s+(?<by>.+)$");
+        if (matcher.find()) {
+            return matcher.group("by");
+        } else {
+            throw new KevinException("Must include a by date.");
+        }
+    }
+
+    public Matcher parseFromAndToDate() throws KevinException {
+        Matcher matcher = parseInput("/from\\s+(?<from>.+?)\\s+"
+                + "/to\\s+(?<to>.+)$");
+        if (matcher.find()) {
+            return matcher;
+        } else {
+            throw new KevinException("Must include a from and to date.");
         }
     }
 
@@ -67,7 +86,7 @@ public class Parser {
         if (matcher.matches()) {
             return matcher.group(1);
         } else {
-            throw new KevinException("No keyword to search for.");
+            throw new KevinException("Must include a keyword to search for.");
         }
     }
 

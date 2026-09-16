@@ -23,39 +23,30 @@ public class TaskList {
     }
 
     /**
-     * Add Task to current TaskList.
+     * Adds Task to current TaskList.
      */
     public void add(Task task) {
         tasks.add(task);
     }
 
-    /**
-     * Delete Task from current TaskList by index.
-     * @param taskIndex
-     * @return DeletedTask
-     * @throws KevinException If index is out of bounds.
-     */
-    public Task delete(int taskIndex) throws KevinException {
+    public void replace(int taskIndex, Task updatedTask) throws KevinException {
         try {
-            Task task = tasks.get(taskIndex);
-            tasks.remove(taskIndex);
-
-            return task;
+            tasks.set(taskIndex, updatedTask);
         } catch (IndexOutOfBoundsException e) {
             throw new KevinException("Must include a valid task number.");
         }
     }
 
     /**
-     * Mark Task in current TaskList as done by index.
+     * Marks Task in current TaskList as done by index.
      * @param taskIndex
      * @return MarkedTask
      * @throws KevinException If index is out of bounds.
      */
     public Task mark(int taskIndex) throws KevinException {
         try {
-            Task markedTask = tasks.get(taskIndex).mark();
-            tasks.set(taskIndex, markedTask);
+            Task markedTask = get(taskIndex).mark();
+            this.replace(taskIndex, markedTask);
 
             return markedTask;
         } catch (IndexOutOfBoundsException e) {
@@ -64,17 +55,34 @@ public class TaskList {
     }
 
     /**
-     * Unmark Task in current TaskList by index.
+     * Unmarks Task in current TaskList by index.
      * @param taskIndex
      * @return UnmarkedTask
      * @throws KevinException If index is out of bounds.
      */
     public Task unmark(int taskIndex) throws KevinException {
         try {
-            Task unmarkedTask = tasks.get(taskIndex).unmark();
-            tasks.set(taskIndex, unmarkedTask);
+            Task unmarkedTask = get(taskIndex).unmark();
+            this.replace(taskIndex, unmarkedTask);
 
             return unmarkedTask;
+        } catch (IndexOutOfBoundsException e) {
+            throw new KevinException("Must include a valid task number.");
+        }
+    }
+
+    /**
+     * Deletes Task from current TaskList by index.
+     * @param taskIndex
+     * @return DeletedTask
+     * @throws KevinException If index is out of bounds.
+     */
+    public Task delete(int taskIndex) throws KevinException {
+        try {
+            Task task = get(taskIndex);
+            tasks.remove(taskIndex);
+
+            return task;
         } catch (IndexOutOfBoundsException e) {
             throw new KevinException("Must include a valid task number.");
         }
@@ -109,6 +117,10 @@ public class TaskList {
             }
         }
         return finalString;
+    }
+
+    public Task get(int taskIndex) {
+        return tasks.get(taskIndex);
     }
 
     /**
