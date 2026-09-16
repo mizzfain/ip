@@ -140,13 +140,13 @@ public class Kevin {
 
         if (taskToSnooze instanceof Deadline deadline) {
             LocalDateTime byDate = parseDateTimeString(parser.parseByDate());
-            deadline.postpone(byDate);
+            deadline.snooze(byDate);
         } else if (taskToSnooze instanceof Event event) {
             Matcher matcher = parser.parseFromAndToDate();
             LocalDateTime fromDate = parseDateTimeString(matcher.group("from"));
             LocalDateTime toDate = parseDateTimeString(matcher.group("to"));
 
-            event.reschedule(fromDate, toDate);
+            event.snooze(fromDate, toDate);
         } else {
             throw new KevinException("Cannot snooze a task with no date.");
         }

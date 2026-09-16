@@ -21,7 +21,7 @@ public class Event extends Task {
         this.end = end;
     }
 
-    public void reschedule(LocalDateTime newStart, LocalDateTime newEnd) {
+    public void snooze(LocalDateTime newStart, LocalDateTime newEnd) {
         this.start = newStart;
         this.end = newEnd;
     }

@@ -18,7 +18,7 @@ public class Deadline extends Task {
         this.by = by;
     }
 
-    public void postpone(LocalDateTime newBy) {
+    public void snooze(LocalDateTime newBy) {
         this.by = newBy;
     }
 
