@@ -140,6 +140,8 @@ public class Kevin {
             LocalDateTime toDate = parseDateTimeString(matcher.group("to"));
 
             event.reschedule(fromDate, toDate);
+        } else {
+            throw new KevinException("Cannot snooze a task with no date.");
         }
         storage.save(tasks);
 

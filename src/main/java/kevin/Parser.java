@@ -60,7 +60,7 @@ public class Parser {
         if (matcher.find()) {
             return matcher.group("by");
         } else {
-            throw new KevinException("No by date.");
+            throw new KevinException("Must include a by date.");
         }
     }
 
@@ -70,7 +70,7 @@ public class Parser {
         if (matcher.find()) {
             return matcher;
         } else {
-            throw new KevinException("No from or to date.");
+            throw new KevinException("Must include a from and to date.");
         }
     }
 
@@ -86,7 +86,7 @@ public class Parser {
         if (matcher.matches()) {
             return matcher.group(1);
         } else {
-            throw new KevinException("No keyword to search for.");
+            throw new KevinException("Must include a keyword to search for.");
         }
     }
 
