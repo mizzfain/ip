@@ -113,8 +113,8 @@ public class TaskList {
         for (Task task : tasks) {
             if (task.contains(keyword)) {
                 finalString = task.addToList(finalString, counter);
-                counter++;
             }
+            counter++;
         }
         return finalString;
     }

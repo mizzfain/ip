@@ -1,3 +1,1 @@
-T | 0 | a
-E | 1 | ip | 18 Sep 2026 328PM | 18 Sep 2026 4PM
-E | 0 | hm | 18 Sep 2026 330PM | 18 Sep 2026 330PM
+T | 1 | a
