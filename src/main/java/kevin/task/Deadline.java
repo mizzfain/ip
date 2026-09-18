@@ -34,7 +34,8 @@ public class Deadline extends Task {
         this(description, false, by);
     }
 
-    public void snooze(LocalDateTime newBy) {
+    public void snooze(LocalDateTime newBy) throws KevinException {
+        checkDateTimeLaterThanNow(by);
         this.by = newBy;
     }
 

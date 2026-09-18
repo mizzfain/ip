@@ -146,7 +146,7 @@ public class Task {
         if (isDone) {
             return "[X] " + description;
         } else {
-            return "[ ] " + description;
+            return "[  ] " + description;
         }
     }
 }

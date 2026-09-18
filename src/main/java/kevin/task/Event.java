@@ -43,7 +43,11 @@ public class Event extends Task {
         this(description, false, start, end);
     }
 
-    public void snooze(LocalDateTime newStart, LocalDateTime newEnd) {
+    public void snooze(LocalDateTime newStart, LocalDateTime newEnd) throws KevinException {
+        checkDateTimeLaterThanNow(newStart);
+        checkDateTimeLaterThanNow(newEnd);
+        checkEndLaterThanStart(newStart, newEnd);
+
         this.start = newStart;
         this.end = newEnd;
     }
