@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Locale;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -42,8 +43,23 @@ public class Task {
         return this;
     }
 
+    /**
+     * Checks if Task description contains keyword.
+     * @param keyword
+     * @return boolean
+     */
     public boolean contains(String keyword) {
         return this.description.contains(keyword);
+    }
+
+    /**
+     * Adds Task to list of Tasks as a String.
+     * @param listString
+     * @param counter
+     * @return String updated list of Tasks.
+     */
+    public String addToList(String listString, int counter) {
+        return listString + counter + ". " + this + '\n';
     }
 
     /**
@@ -51,7 +67,7 @@ public class Task {
      * Outputs as d MMM yyyy hmma e.g 12 Apr 2026 1130am.
      * If minutes is 0, exclude the minutes eg 12 Apr 2026 12pm.
      */
-    protected String formatDateTime(LocalDateTime dateTime) {
+    protected static String formatDateTime(LocalDateTime dateTime) {
         String pattern = "d MMM yyyy ";
 
         if (dateTime.getMinute() == 0) {
@@ -79,27 +95,21 @@ public class Task {
     }
 
     /**
-     * Formats Task into String for saving into tasks.txt.
-     * Output is 1/0 | description where 1 is done and 0 is not done.
-     */
-    public String formatSaveString() {
-        if (isDone) {
-            return "1 | " + description;
-        } else {
-            return "0 | " + description;
-        }
-    }
-
-    /**
      * Parses Task from line when loading tasks.txt.
      * @param line
      * @return Task
      */
     public static Task parseLine(String line) {
+        //Each task must contain the form 1 | <description> if done or 0 | <description> if not done
+        assert line.contains("1 | ") | line.contains("0 | ");
+
         String[] parts = PIPE_SPLITTER.split(line);
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
+
+        //Each task must be of type ToDo, Deadline or Event
+        assert Set.of("T", "D", "E").contains(type);
 
         Task task = switch (type) {
             case "T" -> new ToDo(description, isDone);
@@ -110,6 +120,18 @@ public class Task {
         };
 
         return task;
+    }
+
+    /**
+     * Formats Task into String for saving into tasks.txt.
+     * Output is 1/0 | description where 1 is done and 0 is not done.
+     */
+    public String formatSaveString() {
+        if (isDone) {
+            return "1 | " + description;
+        } else {
+            return "0 | " + description;
+        }
     }
 
     @Override

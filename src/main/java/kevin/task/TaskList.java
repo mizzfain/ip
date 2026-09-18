@@ -23,21 +23,63 @@ public class TaskList {
     }
 
     /**
-     * Add Task to current TaskList.
+     * Adds Task to current TaskList.
      */
     public void add(Task task) {
         tasks.add(task);
     }
 
+    public void replace(int taskIndex, Task updatedTask) throws KevinException {
+        try {
+            tasks.set(taskIndex, updatedTask);
+        } catch (IndexOutOfBoundsException e) {
+            throw new KevinException("Must include a valid task number.");
+        }
+    }
+
     /**
-     * Delete Task from current TaskList by index.
+     * Marks Task in current TaskList as done by index.
+     * @param taskIndex
+     * @return MarkedTask
+     * @throws KevinException If index is out of bounds.
+     */
+    public Task mark(int taskIndex) throws KevinException {
+        try {
+            Task markedTask = get(taskIndex).mark();
+            this.replace(taskIndex, markedTask);
+
+            return markedTask;
+        } catch (IndexOutOfBoundsException e) {
+            throw new KevinException("Must include a valid task number.");
+        }
+    }
+
+    /**
+     * Unmarks Task in current TaskList by index.
+     * @param taskIndex
+     * @return UnmarkedTask
+     * @throws KevinException If index is out of bounds.
+     */
+    public Task unmark(int taskIndex) throws KevinException {
+        try {
+            Task unmarkedTask = get(taskIndex).unmark();
+            this.replace(taskIndex, unmarkedTask);
+
+            return unmarkedTask;
+        } catch (IndexOutOfBoundsException e) {
+            throw new KevinException("Must include a valid task number.");
+        }
+    }
+
+    /**
+     * Deletes Task from current TaskList by index.
      * @param taskIndex
      * @return DeletedTask
      * @throws KevinException If index is out of bounds.
      */
     public Task delete(int taskIndex) throws KevinException {
         try {
-            Task task = tasks.get(taskIndex);
+            Task task = get(taskIndex);
             tasks.remove(taskIndex);
 
             return task;
@@ -47,62 +89,38 @@ public class TaskList {
     }
 
     /**
-     * Mark Task in current TaskList as done by index.
-     * @param taskIndex
-     * @return MarkedTask
-     * @throws KevinException If index is out of bounds.
+     * Lists all Tasks as a String.
      */
-    public Task mark(int taskIndex) throws KevinException {
-        try {
-            Task markedTask = tasks.get(taskIndex).mark();
-            tasks.set(taskIndex, markedTask);
-
-            return markedTask;
-        } catch (IndexOutOfBoundsException e) {
-            throw new KevinException("Must include a valid task number.");
-        }
-    }
-
-    /**
-     * Unmark Task in current TaskList by index.
-     * @param taskIndex
-     * @return UnmarkedTask
-     * @throws KevinException If index is out of bounds.
-     */
-    public Task unmark(int taskIndex) throws KevinException {
-        try {
-            Task unmarkedTask = tasks.get(taskIndex).unmark();
-            tasks.set(taskIndex, unmarkedTask);
-
-            return unmarkedTask;
-        } catch (IndexOutOfBoundsException e) {
-            throw new KevinException("Must include a valid task number.");
-        }
-    }
-
-    /**
-     * Lists all Tasks.
-     */
-    public void list() {
+    public String list() {
+        String finalString = "";
         int counter = 1;
 
         for (Task task : tasks) {
-            System.out.println(counter + "." + task);
+            finalString = task.addToList(finalString, counter);
             counter++;
         }
-
-        System.out.println();
+        return finalString;
     }
 
-    public void find(String keyword) {
+    /**
+     * Returns list of tasks with keyword as a String.
+     * @param keyword
+     */
+    public String find(String keyword) {
+        String finalString = "";
         int counter = 1;
+
         for (Task task : tasks) {
             if (task.contains(keyword)) {
-                System.out.println(counter + "." + task);
+                finalString = task.addToList(finalString, counter);
                 counter++;
             }
         }
-        System.out.println();
+        return finalString;
+    }
+
+    public Task get(int taskIndex) {
+        return tasks.get(taskIndex);
     }
 
     /**
@@ -113,10 +131,16 @@ public class TaskList {
     }
 
     /**
-     * Saves TaskList into tasks.txt.
+
+     * Saves TaskList in filePath.
+     * Assumes filePath has a parent folder (data).
      * @param filePath
      */
     public void save(Path filePath) {
+        //Assumes parent (data) exists and is a folder
+        Path folderPath = filePath.getParent();
+        assert Files.exists(folderPath) && Files.isDirectory(folderPath);
+
         try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
             for (Task task : tasks) {
                 String taskString = task.formatSaveString();

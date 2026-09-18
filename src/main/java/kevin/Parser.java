@@ -17,8 +17,8 @@ public class Parser {
     /**
      * Checks if input is bye.
      */
-    public boolean isNotBye() {
-        return !input.equals("bye");
+    public boolean isBye() {
+        return input.equals("bye");
     }
 
     /**
@@ -36,34 +36,59 @@ public class Parser {
         return input.startsWith(command);
     }
 
+    public Matcher parseInput(String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(input);
+    }
+
     /**
-     * Parses index from input of the form command index.
+     * Parses index from input of the form <command> <index>.
      * @param command
-     * @return index
-     * @throws KevinException If no index in input.
+     * @throws KevinException If input does not have a task number.
      */
     public int parseIndex(String command) throws KevinException {
-        Pattern pattern = Pattern.compile(command + "\\s+(\\d+)");
-        Matcher matcher = pattern.matcher(input);
-
-        if (matcher.matches()) {
+        Matcher matcher = parseInput(command + "\\s+(\\d+)");
+        if (matcher.find()) {
             return Integer.parseInt(matcher.group(1)) - 1;
         } else {
             throw new KevinException("Must include a task number.");
         }
     }
 
-    public String parseKeyword() throws KevinException {
-        Pattern pattern = Pattern.compile("^find\\s+(.+)");
-        Matcher matcher = pattern.matcher(input);
-
-        if (matcher.matches()) {
-            return matcher.group(1);
+    public String parseByDate() throws KevinException {
+        Matcher matcher = parseInput("/by\\s+(?<by>.+)$");
+        if (matcher.find()) {
+            return matcher.group("by");
         } else {
-            throw new KevinException("No keyword to search for.");
+            throw new KevinException("Must include a by date.");
         }
     }
 
+    public Matcher parseFromAndToDate() throws KevinException {
+        Matcher matcher = parseInput("/from\\s+(?<from>.+?)\\s+"
+                + "/to\\s+(?<to>.+)$");
+        if (matcher.find()) {
+            return matcher;
+        } else {
+            throw new KevinException("Must include a from and to date.");
+        }
+    }
+
+    /**
+     * Parses keyword in find command.
+     * @throws KevinException If no keyword provided
+     */
+    public String parseKeyword() throws KevinException {
+        //Input must start with find
+        assert input.startsWith("find");
+
+        Matcher matcher = parseInput("^find\\s+(.+)");
+        if (matcher.matches()) {
+            return matcher.group(1);
+        } else {
+            throw new KevinException("Must include a keyword to search for.");
+        }
+    }
 
     /**
      * Parses ToDo from input.
@@ -71,9 +96,10 @@ public class Parser {
      * @throws KevinException If input does not have a description.
      */
     public String parseToDo() throws KevinException {
-        Pattern pattern = Pattern.compile("^todo\\s+(?<description>.+?)$");
-        Matcher matcher = pattern.matcher(input);
+        //Input must start with todo
+        assert input.startsWith("todo");
 
+        Matcher matcher = parseInput("^todo\\s+(?<description>.+?)$");
         if (matcher.matches()) {
             return matcher.group("description");
         } else {
@@ -87,14 +113,16 @@ public class Parser {
      * @throws KevinException If input does not have a description or /by date.
      */
     public Matcher parseDeadline() throws KevinException {
+        //Input must start with deadline
+        assert input.startsWith("deadline");
+
         String regex = "^deadline\\s+(?<description>.+?)\\s+/by\\s+(?<by>.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
+        Matcher matcher = parseInput(regex);
 
         if (matcher.matches()) {
             return matcher;
         } else {
-            throw new KevinException("Deadline does not have a description or a by date.");
+            throw new KevinException("Deadline does not have a description or a /by date.");
         }
     }
 
@@ -104,16 +132,18 @@ public class Parser {
      * @throws KevinException If input does not have a description, /from date or /to date.
      */
     public Matcher parseEvent() throws KevinException {
+        //Input must start with event
+        assert input.startsWith("event");
+
         String regex = "^event\\s+(?<description>.+?)\\s+"
                 + "/from\\s+(?<from>.+?)\\s+"
                 + "/to\\s+(?<to>.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
+        Matcher matcher = parseInput(regex);
 
         if (matcher.matches()) {
             return matcher;
         } else {
-            throw new KevinException("Event does not have a description, from or to date.");
+            throw new KevinException("Event does not have a description, /from or /to date.");
         }
     }
 }
