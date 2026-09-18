@@ -104,8 +104,9 @@ public class Task {
 
     /**
      * Parses Task from line when loading tasks.txt.
-     * @param line
+     * @param line containing task.
      * @return Task
+     * @throws KevinException If datetime is invalid eg later than current time,
      */
     public static Task parseLine(String line) throws KevinException {
         //Each task must contain the form 1 | <description> if done or 0 | <description> if not done
@@ -119,15 +120,13 @@ public class Task {
         //Each task must be of type ToDo, Deadline or Event
         assert Set.of("T", "D", "E").contains(type);
 
-        Task task = switch (type) {
+        return switch (type) {
             case "T" -> new ToDo(description, isDone);
             case "D" -> new Deadline(description, isDone, parseSavedDateTimeString(parts[3]));
             case "E" -> new Event(description, isDone, parseSavedDateTimeString(parts[3]),
                     parseSavedDateTimeString(parts[4]));
             default -> new Task("Invalid task, can ignore");
         };
-
-        return task;
     }
 
     /**
