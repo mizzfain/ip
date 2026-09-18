@@ -81,6 +81,12 @@ public class Task {
         return dateTime.format(DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
     }
 
+    protected static void checkDateTimeLaterThanNow(LocalDateTime dateTime) throws KevinException {
+        if (dateTime.isBefore(LocalDateTime.now())) {
+            throw new KevinException("Datetime cannot be earlier than now.");
+        }
+    }
+
     /**
      * Helper Function in parseLine().
      * Parses DateTimeString from tasks.txt into LocalDateTime.

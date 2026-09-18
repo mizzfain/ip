@@ -1,5 +1,7 @@
 package kevin.task;
 
+import kevin.KevinException;
+
 import java.time.LocalDateTime;
 
 /**
@@ -8,12 +10,14 @@ import java.time.LocalDateTime;
 public class Deadline extends Task {
     private LocalDateTime by;
 
-    public Deadline(String description, boolean isDone, LocalDateTime by) {
+    public Deadline(String description, boolean isDone, LocalDateTime by) throws KevinException {
+        checkDateTimeLaterThanNow(by);
         super(description, isDone);
         this.by = by;
     }
 
-    public Deadline(String description, LocalDateTime by) {
+    public Deadline(String description, LocalDateTime by) throws KevinException {
+        checkDateTimeLaterThanNow(by);
         super(description, false);
         this.by = by;
     }
