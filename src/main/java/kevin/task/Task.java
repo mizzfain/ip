@@ -1,5 +1,7 @@
 package kevin.task;
 
+import kevin.KevinException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -99,7 +101,7 @@ public class Task {
      * @param line
      * @return Task
      */
-    public static Task parseLine(String line) {
+    public static Task parseLine(String line) throws KevinException {
         //Each task must contain the form 1 | <description> if done or 0 | <description> if not done
         assert line.contains("1 | ") | line.contains("0 | ");
 

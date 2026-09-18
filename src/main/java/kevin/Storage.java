@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Stream;
 
 import kevin.task.Task;
@@ -32,11 +33,13 @@ public class Storage {
 
         try {
             ensureParentDirectoryExists();
-            try (Stream<String> lines = Files.lines(filePath)) {
-                lines.map(Task::parseLine)
-                        .forEach(tasks::add);
+            List<String> lines = Files.readAllLines(filePath);
+            for (String line : lines) {
+                tasks.add(Task.parseLine(line));
             }
         } catch (IOException e) {
+            throw new KevinException(e.getMessage());
+        } catch (KevinException e) {
             throw new KevinException(e.getMessage());
         }
         return tasks;

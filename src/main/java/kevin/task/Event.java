@@ -1,5 +1,7 @@
 package kevin.task;
 
+import kevin.KevinException;
+
 import java.time.LocalDateTime;
 
 /**
@@ -9,13 +11,19 @@ public class Event extends Task {
     private LocalDateTime start;
     private LocalDateTime end;
 
-    public Event(String description, boolean isDone, LocalDateTime start, LocalDateTime end) {
+    public Event(String description, boolean isDone, LocalDateTime start, LocalDateTime end) throws KevinException {
+        if (end.isBefore(start)) {
+            throw new KevinException("To datetime cannot be earlier than from datetime.");
+        }
         super(description, isDone);
         this.start = start;
         this.end = end;
     }
 
-    public Event(String description, LocalDateTime start, LocalDateTime end) {
+    public Event(String description, LocalDateTime start, LocalDateTime end) throws KevinException {
+        if (end.isBefore(start)) {
+            throw new KevinException("To datetime cannot be earlier than from datetime.");
+        }
         super(description, false);
         this.start = start;
         this.end = end;
