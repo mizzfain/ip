@@ -109,24 +109,29 @@ public class Task {
      * @throws KevinException If datetime is invalid eg later than current time,
      */
     public static Task parseLine(String line) throws KevinException {
-        //Each task must contain the form 1 | <description> if done or 0 | <description> if not done
-        assert line.contains("1 | ") | line.contains("0 | ");
+        try {
+            //Each task must contain the form 1 | <description> if done or 0 | <description> if not done
+            assert line.contains("1 | ") | line.contains("0 | ");
 
-        String[] parts = PIPE_SPLITTER.split(line);
-        String type = parts[0];
-        boolean isDone = parts[1].equals("1");
-        String description = parts[2];
+            String[] parts = PIPE_SPLITTER.split(line);
+            String type = parts[0];
+            boolean isDone = parts[1].equals("1");
+            String description = parts[2];
 
-        //Each task must be of type ToDo, Deadline or Event
-        assert Set.of("T", "D", "E").contains(type);
+            //Each task must be of type ToDo, Deadline or Event
+            assert Set.of("T", "D", "E").contains(type);
 
-        return switch (type) {
-            case "T" -> new ToDo(description, isDone);
-            case "D" -> new Deadline(description, isDone, parseSavedDateTimeString(parts[3]));
-            case "E" -> new Event(description, isDone, parseSavedDateTimeString(parts[3]),
-                    parseSavedDateTimeString(parts[4]));
-            default -> new Task("Invalid task, can ignore");
-        };
+            return switch (type) {
+                case "T" -> new ToDo(description, isDone);
+                case "D" -> new Deadline(description, isDone, parseSavedDateTimeString(parts[3]));
+                case "E" -> new Event(description, isDone, parseSavedDateTimeString(parts[3]),
+                        parseSavedDateTimeString(parts[4]));
+                default -> new Task("Invalid task, can ignore");
+            };
+        } catch (AssertionError e) {
+            throw new KevinException("File content is corrupted.");
+        }
+
     }
 
     /**

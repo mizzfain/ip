@@ -38,7 +38,7 @@ public class Storage {
                 tasks.add(Task.parseLine(line));
             }
         } catch (IOException e) {
-            throw new KevinException(e.getMessage());
+            throw new KevinException(e.getMessage() + "IO error");
         }
         return tasks;
     }

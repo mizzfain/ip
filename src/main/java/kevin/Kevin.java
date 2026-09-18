@@ -30,6 +30,7 @@ public class Kevin {
         try {
             this.tasks = storage.load();
         } catch (KevinException e) {
+            ui.print(e.getMessage());
             this.tasks = new TaskList();
         }
     }
