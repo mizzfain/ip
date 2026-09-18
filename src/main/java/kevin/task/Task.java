@@ -24,7 +24,7 @@ public class Task {
     }
 
     /**
-     * Creates Task with default value of false for isDone.
+     * Creates new Task with default value of false for isDone.
      */
     public Task(String description) {
         this(description,false);
