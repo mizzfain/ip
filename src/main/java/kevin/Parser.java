@@ -10,8 +10,13 @@ import java.util.regex.Pattern;
 public class Parser {
     private String input;
 
+    /**
+     * Creates new Parser.
+     * Trims leading and trailing whitespaces.
+     * @param input
+     */
     public Parser(String input) {
-        this.input = input;
+        this.input = input.trim();
     }
 
     /**
