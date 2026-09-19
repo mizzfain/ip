@@ -253,4 +253,8 @@ public class Kevin {
             throw new KevinException("Invalid datetime format. Please input date time using D/M/YY Ham/pm or HMMam/pm");
         }
     }
+
+    public String getInitialMessage() {
+        return ui.getInitialMessage();
+    }
 }

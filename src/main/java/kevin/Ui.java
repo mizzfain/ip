@@ -25,15 +25,19 @@ public class Ui {
         this.loadingTasksMessage += loadingTasksMessage;
     }
 
+    public String getInitialMessage() {
+        String initialMessage = START_BANNER + loadingTasksMessage;
+        if (!loadingTasksMessage.isEmpty()) {
+            initialMessage += '\n';
+        }
+        return(initialMessage + END_BANNER);
+
+    }
     /**
      * Initializes UI and read first input.
      */
     public String start() {
-        if (loadingTasksMessage.isEmpty()) {
-            print(START_BANNER + END_BANNER);
-        } else {
-            print(START_BANNER + loadingTasksMessage + '\n' + END_BANNER);
-        }
+        print(getInitialMessage());
         return readNextLine();
     }
 }
