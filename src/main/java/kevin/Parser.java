@@ -82,6 +82,10 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses from and to datetime from input.
+     * @throws KevinException If no from and/or to date.
+     */
     public Matcher parseFromAndToDate() throws KevinException {
         Matcher matcher = parseInput("/from\\s+(?<from>.+?)\\s+"
                 + "/to\\s+(?<to>.+)$");
@@ -128,7 +132,7 @@ public class Parser {
     /**
      * Parses Deadline from input.
      * @return Matcher matcher contains description and by date.
-     * @throws KevinException If input does not have a description or /by date.
+     * @throws KevinException If input does not have a description or by date.
      */
     public Matcher parseDeadline() throws KevinException {
         //Input must start with deadline
@@ -140,14 +144,14 @@ public class Parser {
         if (matcher.matches()) {
             return matcher;
         } else {
-            throw new KevinException("Deadline does not have a description or a /by date.");
+            throw new KevinException("Deadline does not have a description or a by date.");
         }
     }
 
     /**
      * Parses Event from input.
      * @return Matcher matcher contains description, from date and to date.
-     * @throws KevinException If input does not have a description, /from date or /to date.
+     * @throws KevinException If input does not have a description, from date or to date.
      */
     public Matcher parseEvent() throws KevinException {
         //Input must start with event
@@ -161,7 +165,7 @@ public class Parser {
         if (matcher.matches()) {
             return matcher;
         } else {
-            throw new KevinException("Event does not have a description, /from or /to date.");
+            throw new KevinException("Event does not have a description, from or to date.");
         }
     }
 }

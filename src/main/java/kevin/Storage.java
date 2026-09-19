@@ -6,7 +6,6 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Stream;
 
 import kevin.task.Task;
 import kevin.task.TaskList;
@@ -29,6 +28,9 @@ public class Storage {
 
     /**
      * Loads TaskList from filePath.
+     * Sets loadedTasks as true if any tasks were loaded successfully.
+     * Adds to loadingErrorMessage and sets hasLoadingError as true
+     * if any tasks could not be loaded.
      * @return TaskList
      * @throws KevinException If unable to create Parent Directory.
      */
@@ -81,7 +83,10 @@ public class Storage {
         }
     }
 
-    public String getLoadingTasksMessage() {
+    /**
+     * Creates loadingTasksMessage.
+     */
+    public String createLoadingTasksMessage() {
         String loadingTasksMessage = "";
         if (loadedTasks) {
             loadingTasksMessage += "Tasks loaded successfully.\n";

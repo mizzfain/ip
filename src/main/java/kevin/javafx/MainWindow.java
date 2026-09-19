@@ -36,7 +36,7 @@ public class MainWindow extends AnchorPane {
         this.kevin = kevin;
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().addAll(
-                DialogBox.getKevinDialog(kevin.getInitialMessage(), kevinImage)
+                DialogBox.getKevinDialog(kevin.getBanner(), kevinImage)
         );
     }
 

@@ -1,4 +1,2 @@
-D | 1 | school | 20 Sep 2026 1PM
 E | 1 | work | 20 Sep 2026 1PM | 20 Sep 2026 3PM
-T | 0 | study
-E | 1 | hi | 20 Oct 2026 1PM | 20 Oct 2026 3PM
+E | 0 | hi | 20 Oct 2026 1PM | 20 Oct 2026 3PM

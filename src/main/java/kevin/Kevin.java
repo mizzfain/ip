@@ -29,9 +29,9 @@ public class Kevin {
         this.storage = new Storage(filePath);
         try {
             this.tasks = storage.load();
-            ui.addLoadingTasksMessage(storage.getLoadingTasksMessage());
+            ui.storeLoadingTasksMessage(storage.createLoadingTasksMessage());
         } catch (KevinException e) {
-            ui.addLoadingTasksMessage(e.getMessage());
+            ui.storeLoadingTasksMessage(e.getMessage());
             this.tasks = new TaskList();
         }
     }
@@ -254,7 +254,7 @@ public class Kevin {
         }
     }
 
-    public String getInitialMessage() {
-        return ui.getInitialMessage();
+    public String getBanner() {
+        return ui.createBanner();
     }
 }
