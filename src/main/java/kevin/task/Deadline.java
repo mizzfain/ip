@@ -1,5 +1,7 @@
 package kevin.task;
 
+import kevin.KevinException;
+
 import java.time.LocalDateTime;
 
 /**
@@ -8,17 +10,32 @@ import java.time.LocalDateTime;
 public class Deadline extends Task {
     private LocalDateTime by;
 
+    /**
+     * Creates new Deadline.
+     * Used for creating new Deadline as well as loading saved Deadlines.
+     * @param description
+     * @param isDone
+     * @param by
+     */
     public Deadline(String description, boolean isDone, LocalDateTime by) {
         super(description, isDone);
         this.by = by;
     }
 
-    public Deadline(String description, LocalDateTime by) {
-        super(description, false);
-        this.by = by;
+    /**
+     * Creates new Deadline with default isDone as false.
+     * Checks that by datetime is later than now.
+     * @param description
+     * @param by
+     * @throws KevinException If by datetime is earlier than now.
+     */
+    public Deadline(String description, LocalDateTime by) throws KevinException {
+        checkDateTimeLaterThanNow(by);
+        this(description, false, by);
     }
 
-    public void snooze(LocalDateTime newBy) {
+    public void snooze(LocalDateTime newBy) throws KevinException {
+        checkDateTimeLaterThanNow(by);
         this.by = newBy;
     }
 

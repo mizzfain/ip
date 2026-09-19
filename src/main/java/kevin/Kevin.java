@@ -30,6 +30,7 @@ public class Kevin {
         try {
             this.tasks = storage.load();
         } catch (KevinException e) {
+            ui.print(e.getMessage());
             this.tasks = new TaskList();
         }
     }
@@ -150,7 +151,6 @@ public class Kevin {
         } else {
             throw new KevinException("Cannot snooze a task with no date.");
         }
-
         storage.save(tasks);
 
         return "Snoozed:\n  " + taskToSnooze + "\n";

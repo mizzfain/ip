@@ -21,7 +21,7 @@ public class Ui {
     }
 
     /**
-     * Initialise UI and read
+     * Initialises UI and read
      * @return
      */
     public String start() {

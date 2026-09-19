@@ -1,5 +1,7 @@
 package kevin.task;
 
+import kevin.KevinException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -22,7 +24,7 @@ public class Task {
     }
 
     /**
-     * Creates Task with default value of false for isDone.
+     * Creates new Task with default value of false for isDone.
      */
     public Task(String description) {
         this(description,false);
@@ -79,6 +81,12 @@ public class Task {
         return dateTime.format(DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
     }
 
+    protected static void checkDateTimeLaterThanNow(LocalDateTime dateTime) throws KevinException {
+        if (dateTime.isBefore(LocalDateTime.now())) {
+            throw new KevinException("Datetime cannot be earlier than now.");
+        }
+    }
+
     /**
      * Helper Function in parseLine().
      * Parses DateTimeString from tasks.txt into LocalDateTime.
@@ -96,30 +104,34 @@ public class Task {
 
     /**
      * Parses Task from line when loading tasks.txt.
-     * @param line
+     * @param line containing task.
      * @return Task
+     * @throws KevinException If datetime is invalid eg later than current time,
      */
-    public static Task parseLine(String line) {
-        //Each task must contain the form 1 | <description> if done or 0 | <description> if not done
-        assert line.contains("1 | ") | line.contains("0 | ");
+    public static Task parseLine(String line) throws KevinException {
+        try {
+            //Each task must contain the form 1 | <description> if done or 0 | <description> if not done
+            assert line.contains("1 | ") | line.contains("0 | ");
 
-        String[] parts = PIPE_SPLITTER.split(line);
-        String type = parts[0];
-        boolean isDone = parts[1].equals("1");
-        String description = parts[2];
+            String[] parts = PIPE_SPLITTER.split(line);
+            String type = parts[0];
+            boolean isDone = parts[1].equals("1");
+            String description = parts[2];
 
-        //Each task must be of type ToDo, Deadline or Event
-        assert Set.of("T", "D", "E").contains(type);
+            //Each task must be of type ToDo, Deadline or Event
+            assert Set.of("T", "D", "E").contains(type);
 
-        Task task = switch (type) {
-            case "T" -> new ToDo(description, isDone);
-            case "D" -> new Deadline(description, isDone, parseSavedDateTimeString(parts[3]));
-            case "E" -> new Event(description, isDone, parseSavedDateTimeString(parts[3]),
-                    parseSavedDateTimeString(parts[4]));
-            default -> new Task("Invalid task, can ignore");
-        };
+            return switch (type) {
+                case "T" -> new ToDo(description, isDone);
+                case "D" -> new Deadline(description, isDone, parseSavedDateTimeString(parts[3]));
+                case "E" -> new Event(description, isDone, parseSavedDateTimeString(parts[3]),
+                        parseSavedDateTimeString(parts[4]));
+                default -> new Task("Invalid task, can ignore");
+            };
+        } catch (AssertionError e) {
+            throw new KevinException("File content is corrupted.");
+        }
 
-        return task;
     }
 
     /**
@@ -139,7 +151,7 @@ public class Task {
         if (isDone) {
             return "[X] " + description;
         } else {
-            return "[ ] " + description;
+            return "[  ] " + description;
         }
     }
 }

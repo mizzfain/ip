@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Stream;
 
 import kevin.task.Task;
@@ -32,12 +33,12 @@ public class Storage {
 
         try {
             ensureParentDirectoryExists();
-            try (Stream<String> lines = Files.lines(filePath)) {
-                lines.map(Task::parseLine)
-                        .forEach(tasks::add);
+            List<String> lines = Files.readAllLines(filePath);
+            for (String line : lines) {
+                tasks.add(Task.parseLine(line));
             }
         } catch (IOException e) {
-            throw new KevinException(e.getMessage());
+            throw new KevinException(e.getMessage() + "IO error");
         }
         return tasks;
     }
@@ -45,7 +46,7 @@ public class Storage {
     /**
      * Saves tasks into filePath.
      * Assumes filePath has a parent folder (data).
-     * @param TaskList tasks
+     * @param tasks
      */
     public void save(TaskList tasks) {
         //Checks that parent (data) exists and is a folder
