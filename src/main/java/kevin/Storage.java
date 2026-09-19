@@ -2,6 +2,7 @@ package kevin;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Storage {
     /**
      * Loads TaskList from filePath.
      * @return TaskList
-     * @throws KevinException If filePath does not exist.
+     * @throws KevinException If unable to create Parent Directory.
      */
     public TaskList load() throws KevinException {
         TaskList tasks = new TaskList();
@@ -34,11 +35,21 @@ public class Storage {
         try {
             ensureParentDirectoryExists();
             List<String> lines = Files.readAllLines(filePath);
+            int counter = 0;
             for (String line : lines) {
-                tasks.add(Task.parseLine(line));
+                try {
+                    counter++;
+                    tasks.add(Task.parseLine(line));
+                } catch (KevinException e) {
+                    System.out.println("Failed to load task " + counter);
+                }
+
             }
+        } catch (NoSuchFileException e) {
+            //Empty catch block as writing the file does not require the file to exist.
+            //
         } catch (IOException e) {
-            throw new KevinException(e.getMessage() + "IO error");
+            throw new KevinException(e.getMessage());
         }
         return tasks;
     }
