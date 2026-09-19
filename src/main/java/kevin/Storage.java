@@ -18,6 +18,7 @@ import kevin.task.TaskList;
  */
 public class Storage {
     private Path filePath;
+    private boolean loadedTasks = false;
     private boolean hasLoadingError = false;
     private String loadingErrorMessage = "";
 
@@ -41,6 +42,7 @@ public class Storage {
                 try {
                     counter++;
                     tasks.add(Task.parseLine(line));
+                    loadedTasks = true;
                 } catch (KevinException e) {
                     hasLoadingError = true;
                     loadingErrorMessage += "Task " + counter
@@ -79,11 +81,16 @@ public class Storage {
         }
     }
 
-    public String getLoadingErrorMessage() {
-        if (hasLoadingError) {
-            return loadingErrorMessage;
-        } else {
-            return "";
+    public String getLoadingTasksMessage() {
+        String loadingTasksMessage = "";
+        if (loadedTasks) {
+            loadingTasksMessage += "Tasks loaded successfully.\n";
         }
+        if (hasLoadingError) {
+            loadingTasksMessage += loadingErrorMessage
+                    + "Please fix the corrupted file first as any further changes will "
+                    + "overwrite the corrupted tasks.\n";
+        }
+        return loadingTasksMessage;
     }
 }
