@@ -21,8 +21,11 @@ public class Main extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
+
             Scene scene = new Scene(ap);
+            stage.setTitle("Kevin");
             stage.setScene(scene);
+            
             fxmlLoader.<MainWindow>getController().setKevin(kevin);  // inject the Kevin instance
             stage.show();
         } catch (IOException e) {
