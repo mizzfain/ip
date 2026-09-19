@@ -31,7 +31,8 @@ public class Storage {
      * Sets loadedTasks as true if any tasks were loaded successfully.
      * Adds to loadingErrorMessage and sets hasLoadingError as true
      * if any tasks could not be loaded.
-     * @return TaskList
+     *
+     * @return tasks Previously saved tasks.
      * @throws KevinException If unable to create Parent Directory.
      */
     public TaskList load() throws KevinException {
@@ -62,7 +63,8 @@ public class Storage {
     /**
      * Saves tasks into filePath.
      * Assumes filePath has a parent folder (data).
-     * @param tasks
+     * .
+     * @param tasks current list of tasks.
      */
     public void save(TaskList tasks) {
         //Checks that parent (data) exists and is a folder
@@ -74,6 +76,7 @@ public class Storage {
 
     /**
      * Ensures Parent Directory exists.
+     *
      * @throws IOException If unable to create Parent Directory.
      */
     public void ensureParentDirectoryExists() throws IOException {

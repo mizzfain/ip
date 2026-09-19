@@ -13,7 +13,8 @@ public class Parser {
     /**
      * Creates new Parser.
      * Trims leading and trailing whitespaces.
-     * @param input
+     *
+     * @param input Command line input.
      */
     public Parser(String input) {
         this.input = input.trim();
@@ -35,7 +36,8 @@ public class Parser {
 
     /**
      * Checks if input starts with String command.
-     * @param command
+     *
+     * @param command Command keyword.
      */
     public boolean startsWith(String command) {
         return input.startsWith(command);
@@ -43,8 +45,9 @@ public class Parser {
 
     /**
      * Parses regex pattern in input.
-     * @param regex
-     * @return Matcher
+     *
+     * @param regex Pattern to parse in input.
+     * @return Matcher containing parsed groups.
      */
     public Matcher parseInput(String regex) {
         Pattern pattern = Pattern.compile(regex);
@@ -53,7 +56,8 @@ public class Parser {
 
     /**
      * Parses index from input of the form <command> <index>.
-     * @param command
+     *
+     * @param command Command keyword.
      * @throws KevinException If input does not have a task number.
      */
     public int parseIndex(String command) throws KevinException {
@@ -70,7 +74,8 @@ public class Parser {
 
     /**
      * Parses by datetime from input.
-     * @return
+     *
+     * @return By date as a String.
      * @throws KevinException If no by date.
      */
     public String parseByDate() throws KevinException {
@@ -84,6 +89,7 @@ public class Parser {
 
     /**
      * Parses from and to datetime from input.
+     *
      * @throws KevinException If no from and/or to date.
      */
     public Matcher parseFromAndToDate() throws KevinException {
@@ -98,6 +104,7 @@ public class Parser {
 
     /**
      * Parses keyword in find command.
+     *
      * @throws KevinException If no keyword provided
      */
     public String parseKeyword() throws KevinException {
@@ -114,7 +121,8 @@ public class Parser {
 
     /**
      * Parses ToDo from input.
-     * @return description
+     *
+     * @return Description of ToDo.
      * @throws KevinException If input does not have a description.
      */
     public String parseToDo() throws KevinException {
@@ -131,7 +139,8 @@ public class Parser {
 
     /**
      * Parses Deadline from input.
-     * @return Matcher matcher contains description and by date.
+     *
+     * @return Matcher containing description and by date.
      * @throws KevinException If input does not have a description or by date.
      */
     public Matcher parseDeadline() throws KevinException {
@@ -150,7 +159,8 @@ public class Parser {
 
     /**
      * Parses Event from input.
-     * @return Matcher matcher contains description, from date and to date.
+     *
+     * @return Matcher containing description, from date and to date.
      * @throws KevinException If input does not have a description, from date or to date.
      */
     public Matcher parseEvent() throws KevinException {

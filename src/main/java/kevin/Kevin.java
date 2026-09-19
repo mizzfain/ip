@@ -23,7 +23,7 @@ public class Kevin {
      * Creates Kevin.
      * Loads tasks from tasks.txt, or creates empty TaskList if does not exist.
      *
-     * @param filePath of tasks.txt.
+     * @param filePath tasks.txt.
      */
     public Kevin(String filePath) {
         this.ui = new Ui();
@@ -55,9 +55,9 @@ public class Kevin {
     }
 
     /**
-     * Creates response to input as a String.
+     * Executes logic of each command and responds with a String.
      *
-     * @param parser containing input
+     * @param parser Parser containing input.
      */
     public String respond(Parser parser) {
         try {
@@ -103,8 +103,8 @@ public class Kevin {
      * Handles mark commands.
      * Parses taskIndex, marks Task and saves updated TaskList.
      *
-     * @param parser
-     * @return String response
+     * @param parser Parser containing input.
+     * @return Response to input.
      * @throws KevinException If input does not have a task number.
      */
     public String handleMark(Parser parser) throws KevinException {
@@ -120,8 +120,8 @@ public class Kevin {
      * Handles unmark commands.
      * Parses taskIndex, unmarks Task and saves updated TaskList.
      *
-     * @param parser
-     * @return String response
+     * @param parser Parser containing input.
+     * @return Response to input.
      * @throws KevinException If input does not have a task number.
      */
     public String handleUnmark(Parser parser) throws KevinException {
@@ -138,8 +138,8 @@ public class Kevin {
      * Parses taskIndex, extracts later datetimes,
      * snoozes task to later date and saves updated TaskList.
      *
-     * @param parser
-     * @return String response
+     * @param parser Parser containing input.
+     * @return Response to input.
      * @throws KevinException If try to snooze a Task with no date eg ToDo.
      */
     public String handleSnooze(Parser parser) throws KevinException {
@@ -167,8 +167,8 @@ public class Kevin {
      * Handles delete commands.
      * Parses taskIndex, deletes Task and saves updated TaskList.
      *
-     * @param parser
-     * @return String response
+     * @param parser Parser containing input.
+     * @return Response to input.
      * @throws KevinException If input does not have a task number.
      */
     public String handleDelete(Parser parser) throws KevinException {
@@ -185,9 +185,9 @@ public class Kevin {
      * Handles ToDo commands.
      * Parses description, adds ToDo to TaskList and saves updated TaskList.
      *
-     * @param parser
-     * @return String response
-     * @throws KevinException If input does not have a description or a /by date.
+     * @param parser Parser containing input.
+     * @return Response to input.
+     * @throws KevinException If input does not have a description or a by date.
      */
     public String handleToDo(Parser parser) throws KevinException {
         String description = parser.parseToDo();
@@ -203,8 +203,8 @@ public class Kevin {
      * Handles Deadline commands.
      * Parses description, by date, adds Deadline to TaskList and saves updated TaskList.
      *
-     * @param parser
-     * @return String response
+     * @param parser Parser containing input.
+     * @return Response to input.
      * @throws KevinException If input does not have a description or a /by date.
      */
     public String handleDeadline(Parser parser) throws KevinException {
@@ -225,8 +225,8 @@ public class Kevin {
      * Handles Event commands.
      * Parses description, from and to date, adds Event to TaskList and saves updated TaskList.
      *
-     * @param parser
-     * @return String response
+     * @param parser Parser containing input.
+     * @return Response to input.
      * @throws KevinException If input does not have a description, /from date or /to date.
      */
     public String handleEvent(Parser parser) throws KevinException {
@@ -253,6 +253,7 @@ public class Kevin {
 
     /**
      * Parses DateTimeString from the user input into LocalDateTime.
+     *
      * @throws KevinException If user input wrong format for date time.
      */
     public static LocalDateTime parseDateTimeString(String dateTimeString) throws KevinException {

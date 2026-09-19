@@ -36,7 +36,6 @@ public class Ui {
 
     /**
      * Creates Banner to output on start.
-     * @return String.
      */
     public String createBanner() {
         String banner = BANNER_START + loadingTasksMessage;
