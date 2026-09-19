@@ -58,6 +58,14 @@ public class DialogBox extends HBox {
                 + "-fx-border-width: 10;");
     }
 
+    private void getErrorDialog() {
+        setStyle("-fx-background-color: #FFCDD2;"
+                + "-fx-background-radius: 14;"
+                + "-fx-border-color: #EF5350;"
+                + "-fx-border-radius: 14;"
+                + "-fx-border-width: 10;");
+    }
+
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
@@ -65,6 +73,10 @@ public class DialogBox extends HBox {
     public static DialogBox getKevinDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+
+        if (text.startsWith("???")) {
+            db.getErrorDialog();
+        }
         return db;
     }
 }
