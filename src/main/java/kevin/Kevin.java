@@ -22,6 +22,7 @@ public class Kevin {
     /**
      * Creates Kevin.
      * Loads tasks from tasks.txt, or creates empty TaskList if does not exist.
+     *
      * @param filePath of tasks.txt.
      */
     public Kevin(String filePath) {
@@ -54,7 +55,8 @@ public class Kevin {
     }
 
     /**
-     * Responds to input as a String.
+     * Creates response to input as a String.
+     *
      * @param parser containing input
      */
     public String respond(Parser parser) {
@@ -100,6 +102,7 @@ public class Kevin {
     /**
      * Handles mark commands.
      * Parses taskIndex, marks Task and saves updated TaskList.
+     *
      * @param parser
      * @return String response
      * @throws KevinException If input does not have a task number.
@@ -116,6 +119,7 @@ public class Kevin {
     /**
      * Handles unmark commands.
      * Parses taskIndex, unmarks Task and saves updated TaskList.
+     *
      * @param parser
      * @return String response
      * @throws KevinException If input does not have a task number.
@@ -131,7 +135,9 @@ public class Kevin {
 
     /**
      * Handles snooze commands.
-     * Parses taskIndex, snoozes task to later date and saves updated TaskList.
+     * Parses taskIndex, extracts later datetimes,
+     * snoozes task to later date and saves updated TaskList.
+     *
      * @param parser
      * @return String response
      * @throws KevinException If try to snooze a Task with no date eg ToDo.
@@ -160,6 +166,7 @@ public class Kevin {
     /**
      * Handles delete commands.
      * Parses taskIndex, deletes Task and saves updated TaskList.
+     *
      * @param parser
      * @return String response
      * @throws KevinException If input does not have a task number.
@@ -177,6 +184,7 @@ public class Kevin {
     /**
      * Handles ToDo commands.
      * Parses description, adds ToDo to TaskList and saves updated TaskList.
+     *
      * @param parser
      * @return String response
      * @throws KevinException If input does not have a description or a /by date.
@@ -194,6 +202,7 @@ public class Kevin {
     /**
      * Handles Deadline commands.
      * Parses description, by date, adds Deadline to TaskList and saves updated TaskList.
+     *
      * @param parser
      * @return String response
      * @throws KevinException If input does not have a description or a /by date.
@@ -215,6 +224,7 @@ public class Kevin {
     /**
      * Handles Event commands.
      * Parses description, from and to date, adds Event to TaskList and saves updated TaskList.
+     *
      * @param parser
      * @return String response
      * @throws KevinException If input does not have a description, /from date or /to date.
@@ -235,7 +245,7 @@ public class Kevin {
     }
 
     /**
-     * Main entry point for chatbot.
+     * Starts the chatbot.
      */
     public static void main(String[] args)  {
         new Kevin("data/tasks.txt").run();
@@ -254,6 +264,9 @@ public class Kevin {
         }
     }
 
+    /**
+     * Gets Banner from UI as a String.
+     */
     public String getBanner() {
         return ui.createBanner();
     }
