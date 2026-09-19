@@ -3,7 +3,7 @@ package kevin;
 import java.util.Scanner;
 
 public class Ui {
-    private String START_BANNER =
+    private String startBanner =
             "Hello! I'm Kevin.\nWhat would you like me to help you with?\n";
 
     private Scanner scanner;
@@ -20,12 +20,16 @@ public class Ui {
         System.out.println(output);
     }
 
+    public void addLoadingTasksMessage(String loadingTasksMessage) {
+        startBanner += loadingTasksMessage;
+    }
+
     /**
      * Initialises UI and read
      * @return
      */
     public String start() {
-        print(START_BANNER);
+        print(startBanner);
         return readNextLine();
     }
 }

@@ -18,6 +18,8 @@ import kevin.task.TaskList;
  */
 public class Storage {
     private Path filePath;
+    private boolean hasLoadingError = false;
+    private String loadingErrorMessage = "";
 
     public Storage(String filePathString) {
         this.filePath = Paths.get(filePathString);
@@ -31,7 +33,6 @@ public class Storage {
      */
     public TaskList load() throws KevinException {
         TaskList tasks = new TaskList();
-
         try {
             ensureParentDirectoryExists();
             List<String> lines = Files.readAllLines(filePath);
@@ -41,15 +42,15 @@ public class Storage {
                     counter++;
                     tasks.add(Task.parseLine(line));
                 } catch (KevinException e) {
-                    System.out.println("Failed to load task " + counter);
+                    hasLoadingError = true;
+                    loadingErrorMessage += "Task " + counter
+                            + " was corrupted and could not be loaded.\n";
                 }
-
             }
         } catch (NoSuchFileException e) {
             //Empty catch block as writing the file does not require the file to exist.
-            //
         } catch (IOException e) {
-            throw new KevinException(e.getMessage());
+            throw new KevinException("Cannot access filepath.");
         }
         return tasks;
     }
@@ -75,6 +76,14 @@ public class Storage {
         Path folderPath = filePath.getParent();
         if (folderPath != null) {
             Files.createDirectories(folderPath);
+        }
+    }
+
+    public String getLoadingErrorMessage() {
+        if (hasLoadingError) {
+            return loadingErrorMessage;
+        } else {
+            return "";
         }
     }
 }

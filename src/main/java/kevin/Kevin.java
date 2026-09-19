@@ -29,8 +29,9 @@ public class Kevin {
         this.storage = new Storage(filePath);
         try {
             this.tasks = storage.load();
+            ui.addLoadingTasksMessage(storage.getLoadingErrorMessage());
         } catch (KevinException e) {
-            ui.print(e.getMessage());
+            ui.addLoadingTasksMessage(e.getMessage());
             this.tasks = new TaskList();
         }
     }
