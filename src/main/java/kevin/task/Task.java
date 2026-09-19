@@ -128,7 +128,7 @@ public class Task {
                         parseSavedDateTimeString(parts[4]));
                 default -> new Task("Invalid task, can ignore");
             };
-        } catch (AssertionError | ArrayIndexOutOfBoundsException e) {
+        } catch (AssertionError | Exception e) {
             throw new KevinException("Task is corrupted.");
         }
     }

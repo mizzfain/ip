@@ -29,7 +29,11 @@ public class Ui {
      * Initializes UI and read first input.
      */
     public String start() {
-        print(START_BANNER + loadingTasksMessage + '\n' + END_BANNER);
+        if (loadingTasksMessage.isEmpty()) {
+            print(START_BANNER + END_BANNER);
+        } else {
+            print(START_BANNER + loadingTasksMessage + '\n' + END_BANNER);
+        }
         return readNextLine();
     }
 }

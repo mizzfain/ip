@@ -52,7 +52,7 @@ public class Storage {
         } catch (NoSuchFileException e) {
             //Empty catch block as writing the file does not require the file to exist.
         } catch (IOException e) {
-            throw new KevinException("Cannot access filepath.");
+            throw new KevinException("Cannot read filepath.");
         }
         return tasks;
     }
