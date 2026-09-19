@@ -135,7 +135,7 @@ public class Kevin {
 
     /**
      * Handles snooze commands.
-     * Parses taskIndex, extracts later datetimes,
+     * Parses taskIndex, extracts later DateTimes,
      * snoozes task to later date and saves updated TaskList.
      *
      * @param parser Parser containing input.
@@ -261,7 +261,7 @@ public class Kevin {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[d/M/yy hmma][d/M/yy ha]");
             return LocalDateTime.parse(dateTimeString, formatter);
         } catch (Exception e) {
-            throw new KevinException("Invalid datetime format. Please input date time using D/M/YY Ham/pm or HMMam/pm");
+            throw new KevinException("Invalid DateTime format. Please input date time using D/M/YY Ham/pm or HMMam/pm");
         }
     }
 

@@ -73,7 +73,7 @@ public class Parser {
     }
 
     /**
-     * Parses by datetime from input.
+     * Parses by DateTime from input.
      *
      * @return By date as a String.
      * @throws KevinException If no by date.
@@ -88,7 +88,7 @@ public class Parser {
     }
 
     /**
-     * Parses from and to datetime from input.
+     * Parses from and to DateTime from input.
      *
      * @throws KevinException If no from and/or to date.
      */

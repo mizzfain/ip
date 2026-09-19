@@ -13,9 +13,10 @@ public class Deadline extends Task {
     /**
      * Creates new Deadline.
      * Used for creating new Deadline as well as loading saved Deadlines.
-     * @param description
-     * @param isDone
-     * @param by
+     *
+     * @param description Description of Deadline.
+     * @param isDone Whether Deadline is done.
+     * @param by By date of Deadline.
      */
     public Deadline(String description, boolean isDone, LocalDateTime by) {
         super(description, isDone);
@@ -24,10 +25,9 @@ public class Deadline extends Task {
 
     /**
      * Creates new Deadline with default isDone as false.
-     * Checks that by datetime is later than now.
-     * @param description
-     * @param by
-     * @throws KevinException If by datetime is earlier than now.
+     * Checks that by DateTime is later than now.
+
+     * @throws KevinException If by DateTime is earlier than now.
      */
     public Deadline(String description, LocalDateTime by) throws KevinException {
         checkDateTimeLaterThanNow(by);
@@ -35,8 +35,9 @@ public class Deadline extends Task {
     }
 
     /**
-     * Snoozes by date to a later datetime.
-     * @param newByDate
+     * Snoozes by date to a later DateTime.
+     *
+     * @param newByDate New delayed by date.
      * @throws KevinException If new by date is earlier than now.
      */
     public void snooze(LocalDateTime newByDate) throws KevinException {

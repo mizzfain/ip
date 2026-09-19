@@ -31,6 +31,7 @@ public class TaskList {
 
     /**
      * Replaces Task at taskIndex with updatedTask.
+     *
      * @throws KevinException If index is out of bounds.
      */
     public void replace(int taskIndex, Task updatedTask) throws KevinException {
@@ -43,8 +44,9 @@ public class TaskList {
 
     /**
      * Marks Task in current TaskList as done by index.
-     * @param taskIndex
-     * @return MarkedTask
+     *
+     * @param taskIndex Index of Task to mark.
+     * @return MarkedTask Task marked as done.
      * @throws KevinException If index is out of bounds.
      */
     public Task mark(int taskIndex) throws KevinException {
@@ -60,8 +62,9 @@ public class TaskList {
 
     /**
      * Unmarks Task in current TaskList by index.
-     * @param taskIndex
-     * @return UnmarkedTask
+     *
+     * @param taskIndex Index of Task to unmark.
+     * @return UnmarkedTask Task marked as not done.
      * @throws KevinException If index is out of bounds.
      */
     public Task unmark(int taskIndex) throws KevinException {
@@ -77,8 +80,9 @@ public class TaskList {
 
     /**
      * Deletes Task from current TaskList by index.
-     * @param taskIndex
-     * @return DeletedTask
+     *
+     * @param taskIndex Index of Task to delete.
+     * @return DeletedTask Task that was deleted.
      * @throws KevinException If index is out of bounds.
      */
     public Task delete(int taskIndex) throws KevinException {
@@ -107,8 +111,9 @@ public class TaskList {
     }
 
     /**
-     * Returns list of tasks with keyword as a String.
-     * @param keyword
+     * Finds tasks which contain keyword.
+     *
+     * @param keyword Keyword to search for in TaskList.
      */
     public String find(String keyword) {
         String finalString = "";
@@ -125,7 +130,8 @@ public class TaskList {
 
     /**
      * Gets Task at taskIndex.
-     * @param taskIndex
+     *
+     * @param taskIndex Index of Task to retrieve.
      */
     public Task get(int taskIndex) {
         return tasks.get(taskIndex);
@@ -141,7 +147,8 @@ public class TaskList {
     /**
      * Saves TaskList in filePath.
      * Assumes filePath has a parent folder (data).
-     * @param filePath
+     *
+     * @param filePath filePath to save TaskList in.
      */
     public void save(Path filePath) {
         //Assumes parent (data) exists and is a folder

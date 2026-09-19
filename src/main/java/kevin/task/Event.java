@@ -13,11 +13,12 @@ public class Event extends Task {
 
     /**
      * Creates new Event.
-     * Checks that to datetime is later than from.
-     * @param description
-     * @param isDone
-     * @param from
-     * @param to
+     * Checks that to DateTime is later than from.
+     *
+     * @param description Description of Event.
+     * @param isDone Whether Event is done.
+     * @param from From date of Event.
+     * @param to To date of Event.
      * @throws KevinException If to is earlier than from.
      */
     public Event(String description, boolean isDone, LocalDateTime from, LocalDateTime to) throws KevinException {
@@ -30,11 +31,9 @@ public class Event extends Task {
 
     /**
      * Creates new Event with default isDone as false.
-     * Checks that datetimes are later than now.
-     * @param description
-     * @param from
-     * @param end
-     * @throws KevinException If datetimes are earlier than now, or to is earlier than from.
+     * Checks that DateTimes are later than now.
+
+     * @throws KevinException If DateTimes are earlier than now, or to is earlier than from.
      */
     public Event(String description, LocalDateTime from, LocalDateTime end) throws KevinException {
         checkDateTimeLaterThanNow(from);
@@ -44,10 +43,11 @@ public class Event extends Task {
     }
 
     /**
-     * Snoozes from and/or to dates to a later datetime.
-     * @param newFrom
-     * @param newTo
-     * @throws KevinException If new from/to date is later than now, or to is earlier than from.
+     * Snoozes from and/or to dates to a later DateTime.
+     *
+     * @param newFrom New delayed from DateTime.
+     * @param newTo New delayed to DateTime.
+     * @throws KevinException If new from/to is later than now, or to is earlier than from.
      */
     public void snooze(LocalDateTime newFrom, LocalDateTime newTo) throws KevinException {
         checkDateTimeLaterThanNow(newFrom);
@@ -59,14 +59,15 @@ public class Event extends Task {
     }
 
     /**
-     * Checks if to DateTime is earlier than from DateTime.
-     * @param from
-     * @param to
+     * Checks that from DateTime is later than to DateTime.
+     *
+     * @param from From DateTime.
+     * @param to To DateTime.
      * @throws KevinException If to is earlier than from.
      */
     public static void checkFromLaterThanTo(LocalDateTime from, LocalDateTime to) throws KevinException {
         if (to.isBefore(from)) {
-            throw new KevinException("To datetime cannot be earlier than from datetime.");
+            throw new KevinException("To DateTime cannot be earlier than from DateTime.");
         }
     }
 

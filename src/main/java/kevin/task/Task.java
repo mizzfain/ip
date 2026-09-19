@@ -47,8 +47,9 @@ public class Task {
 
     /**
      * Checks if Task description contains keyword.
-     * @param keyword
-     * @return boolean
+     *
+     * @param keyword Keyword to check for in Task description.
+     * @return boolean Whether Task contains keyword.
      */
     public boolean contains(String keyword) {
         return this.description.contains(keyword);
@@ -56,12 +57,13 @@ public class Task {
 
     /**
      * Adds Task to list of Tasks as a String.
-     * @param listString
-     * @param counter
-     * @return String updated list of Tasks.
+     *
+     * @param listString List of Tasks.
+     * @param number Task number.
+     * @return String Updated list of Tasks.
      */
-    public String addToList(String listString, int counter) {
-        return listString + counter + ". " + this + '\n';
+    public String addToList(String listString, int number) {
+        return listString + number + ". " + this + '\n';
     }
 
     /**
@@ -83,6 +85,7 @@ public class Task {
 
     /**
      * Checks datetime is later than now.
+     * s
      * @throws KevinException If datetime is earlier than now.
      */
     protected static void checkDateTimeLaterThanNow(LocalDateTime dateTime) throws KevinException {
@@ -107,8 +110,9 @@ public class Task {
 
     /**
      * Parses Task from line when loading tasks.txt.
-     * @param line containing task.
-     * @return Task
+     *
+     * @param line Line containing task.
+     * @return Saved Task.
      * @throws KevinException If task is corrupted in tasks.txt.
      */
     public static Task parseLine(String line) throws KevinException {
