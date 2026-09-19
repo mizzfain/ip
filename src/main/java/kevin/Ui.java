@@ -3,8 +3,9 @@ package kevin;
 import java.util.Scanner;
 
 public class Ui {
-    private String startBanner =
-            "Hello! I'm Kevin.\nWhat would you like me to help you with?\n";
+    private String START_BANNER = "Hello! I'm Kevin.\n\n";
+    private String loadingBanner = "";
+    private String END_BANNER = "What would you like me to help you with?\n";
 
     private Scanner scanner;
 
@@ -21,15 +22,14 @@ public class Ui {
     }
 
     public void addLoadingTasksMessage(String loadingTasksMessage) {
-        startBanner += loadingTasksMessage;
+        loadingBanner += loadingTasksMessage;
     }
 
     /**
-     * Initialises UI and read
-     * @return
+     * Initializes UI and read first input.
      */
     public String start() {
-        print(startBanner);
+        print(START_BANNER + loadingBanner + '\n' + END_BANNER);
         return readNextLine();
     }
 }
