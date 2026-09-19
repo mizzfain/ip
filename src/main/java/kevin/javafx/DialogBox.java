@@ -36,6 +36,11 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+        setStyle("-fx-background-color: #E8F1FF;"
+                + "-fx-background-radius: 14;"
+                + "-fx-border-color: #90CAF9;"
+                + "-fx-border-radius: 14;"
+                + "-fx-border-width: 10;");
     }
 
     /**
@@ -46,6 +51,11 @@ public class DialogBox extends HBox {
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
+        setStyle("-fx-background-color: #F3E5F5;"
+                + "-fx-background-radius: 14;"
+                + "-fx-border-color: #CE93D8;"
+                + "-fx-border-radius: 14;"
+                + "-fx-border-width: 10;");
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
