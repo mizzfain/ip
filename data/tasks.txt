@@ -1,2 +1,3 @@
-E | 1 | work | 20 Sep 2026 1PM | 20 Sep 2026 3PM
-E | 0 | hi | 20 Oct 2026 1PM | 20 Oct 2026 3PM
+T | 0 | buy groceries
+D | 1 | clean room | 20 Sep 2026 12PM
+E | 0 | project meeting | 27 Oct 2026 1PM | 27 Oct 2026 130PM
