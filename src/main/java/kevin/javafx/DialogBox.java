@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -40,7 +41,7 @@ public class DialogBox extends HBox {
                 + "-fx-background-radius: 14;"
                 + "-fx-border-color: #90CAF9;"
                 + "-fx-border-radius: 14;"
-                + "-fx-border-width: 10;");
+                + "-fx-border-width: 6.5;");
     }
 
     /**
@@ -55,7 +56,7 @@ public class DialogBox extends HBox {
                 + "-fx-background-radius: 14;"
                 + "-fx-border-color: #CE93D8;"
                 + "-fx-border-radius: 14;"
-                + "-fx-border-width: 10;");
+                + "-fx-border-width: 8;");
     }
 
     private void getErrorDialog() {
@@ -63,11 +64,15 @@ public class DialogBox extends HBox {
                 + "-fx-background-radius: 14;"
                 + "-fx-border-color: #EF5350;"
                 + "-fx-border-radius: 14;"
-                + "-fx-border-width: 10;");
+                + "-fx-border-width: 8;");
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        var db = new DialogBox(text, null);
+        db.displayPicture.setVisible(false);
+        db.displayPicture.setManaged(false);
+        db.setPadding(new Insets(10, 24, 10, 12));
+        return db;
     }
 
     public static DialogBox getKevinDialog(String text, Image img) {
