@@ -81,6 +81,10 @@ public class Task {
         return dateTime.format(DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH));
     }
 
+    /**
+     * Checks datetime is later than now.
+     * @throws KevinException If datetime is earlier than now.
+     */
     protected static void checkDateTimeLaterThanNow(LocalDateTime dateTime) throws KevinException {
         if (dateTime.isBefore(LocalDateTime.now())) {
             throw new KevinException("Datetime cannot be earlier than now.");
@@ -88,7 +92,6 @@ public class Task {
     }
 
     /**
-     * Helper Function in parseLine().
      * Parses DateTimeString from tasks.txt into LocalDateTime.
      * Accepts d MMM yyyy hmma e.g 12 Apr 2026 1230pm and without the minutes e.g 12 Apr 2026 1130am.
      */
@@ -106,7 +109,7 @@ public class Task {
      * Parses Task from line when loading tasks.txt.
      * @param line containing task.
      * @return Task
-     * @throws KevinException If datetime is invalid eg later than current time,
+     * @throws KevinException If task is corrupted in tasks.txt.
      */
     public static Task parseLine(String line) throws KevinException {
         try {

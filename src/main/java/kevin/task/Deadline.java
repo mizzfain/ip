@@ -34,11 +34,19 @@ public class Deadline extends Task {
         this(description, false, by);
     }
 
-    public void snooze(LocalDateTime newBy) throws KevinException {
+    /**
+     * Snoozes by date to a later datetime.
+     * @param newByDate
+     * @throws KevinException If new by date is earlier than now.
+     */
+    public void snooze(LocalDateTime newByDate) throws KevinException {
         checkDateTimeLaterThanNow(by);
-        this.by = newBy;
+        this.by = newByDate;
     }
 
+    /**
+     * Formats Deadline into String for saving into tasks.txt.
+     */
     @Override
     public String formatSaveString() {
         return "D | " + super.formatSaveString() + " | " + formatDateTime(by);

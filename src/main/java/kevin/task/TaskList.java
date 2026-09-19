@@ -29,6 +29,10 @@ public class TaskList {
         tasks.add(task);
     }
 
+    /**
+     * Replaces Task at taskIndex with updatedTask.
+     * @throws KevinException If index is out of bounds.
+     */
     public void replace(int taskIndex, Task updatedTask) throws KevinException {
         try {
             tasks.set(taskIndex, updatedTask);
@@ -119,6 +123,10 @@ public class TaskList {
         return finalString;
     }
 
+    /**
+     * Gets Task at taskIndex.
+     * @param taskIndex
+     */
     public Task get(int taskIndex) {
         return tasks.get(taskIndex);
     }
@@ -131,7 +139,6 @@ public class TaskList {
     }
 
     /**
-
      * Saves TaskList in filePath.
      * Assumes filePath has a parent folder (data).
      * @param filePath

@@ -12,6 +12,9 @@ public class ToDo extends Task {
         super(description, false);
     }
 
+    /**
+     * Formats ToDo into String for saving into tasks.txt.
+     */
     @Override
     public String formatSaveString() {
         return "T | " + super.formatSaveString();
