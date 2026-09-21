@@ -4,7 +4,7 @@ Kevin is an interactive chatbot that you can you use to store and manage your Ta
 
 ## Installation and Setting up
 1. Ensure that Java 25 or later is installed on your computer.\
-Mac users: Ensure you have the precise JDK version prescribed here.
+Mac users: Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 2. Download the latest .jar file from [here](https://github.com/mizzfain/ip/releases) (currently is v0.2).
 3. Copy the file to the folder you want to use as the home folder for your tasks.
 
