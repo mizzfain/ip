@@ -20,14 +20,13 @@ For example, type `list` to display any previously saved Tasks.
 In the command formats below:
 - Words in `UPPER_CASE` are parameters you supply.\
 For example, in `todo DESCRIPTION`, replace `DESCRIPTION` with a value like `buy groceries` so the command would be `todo buy groceries`
-- Items in `[square brackets]` are optional. Do not include the brackets.
 - For DateTimes, use `d/m/yy HMMam/pm`. Alternatively, you can use `Ham/pm` for the time if the minutes are not required.\
 For example, `9/12/26 730am` or `18/9/26 12pm`
 
 ## Adding Tasks
 There are 3 types of Tasks that can be added. ToDos, Deadlines, and Events.
 ## ToDos
-ToDos are the most basic Task with just a description.\
+ToDos are the most basic Task with just a description.
 
 Format:`todo DESCRIPTION`
 
@@ -44,17 +43,15 @@ Example usage: `deadline clean room /by 20/9/26 12pm`
 
 Events are Tasks with a from and to DateTime. 
 
-Format: `event DESCRIPTION /from DATETIME /to DATETIME`\
+Format: `event DESCRIPTION /from DATETIME /to DATETIME`
 
 Example usage: `event project meeting /from 17/2/26 1pm /to 17/2/26 130pm`
-
-// A description of the expected outcome goes here
 
 
 
 ## Viewing Tasks
 ###  All Tasks
-To view all your Tasks as a list, use `list`\
+To view all your Tasks as a list, use `list`
 
 Example usage: `list`
 
@@ -66,12 +63,12 @@ Example output:
 ```
 Some things to note to understand the output:
 - Tasks are given a number to identify them e.g `1.` This number is used in other commands.
-- The first `[ ]` is the type of Task and `T`,`D`and `E`represent Task, Deadline and Event respectively.
-- The second `[ ]` show whether a task has been completed, with `[X]` meaning done and `[ ]` meaning not done.
+- The first `[ ]` is the type of Task. `T`,`D`and `E`represent Task, Deadline and Event respectively.
+- The second `[ ]` show whether a task has been completed. `[X]` means done and `[ ]` means not done.
 - This is followed by the description of the task and any DateTimes relevant to the Task.
 
 ### Tasks with a specific keyword
-To find tasks containing a certain keyword, use `find`\
+To find tasks containing a certain keyword, use `find`
 
 Format: `find KEYWORD`
 
@@ -84,7 +81,7 @@ For example, `find room` gives the output:
 
 Tasks can be marked as done or not done using `mark` or `unmark` respectively.
 
-To mark/unmark a task, use the task's number to identify it.
+To mark/unmark a Task, use the Task's number to identify it.
 
 Format: `mark NUMBER` or `unmark NUMBER`
 
@@ -92,7 +89,8 @@ Example usage: `mark 3`
 
 ## Snoozing Tasks
 For Tasks with a DateTime such as Deadline or Event, you can use `snooze` to postpone
-the DateTime if Deadlines get extended or the Event reschedules. 
+the DateTime using the Task's number to identify it. 
+For example, if Deadlines get extended or the Event reschedules. 
 
 The format changes depending on the type of Task.
 
@@ -102,7 +100,7 @@ For Events, use `snooze NUMBER /from DATETIME /to DATETIME`
 
 ## Deleting Tasks
 
-When you have too many Tasks or simply want to remove completed ones, use `delete`.
+When you have too many Tasks or simply want to remove completed/uncompleted ones, use `delete`.
 Again, use the task's number to identify it.
 
 Format: `delete NUMBER`

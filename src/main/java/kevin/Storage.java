@@ -49,7 +49,7 @@ public class Storage {
                 } catch (KevinException e) {
                     hasLoadingError = true;
                     loadingErrorMessage += "Task " + counter
-                            + " was corrupted and could not be loaded.\n";
+                            + " was corrupted and could not be loaded. " + e.getMessage().substring(4) + '\n';
                 }
             }
         } catch (NoSuchFileException e) {

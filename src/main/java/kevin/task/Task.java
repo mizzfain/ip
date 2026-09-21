@@ -1,19 +1,23 @@
 package kevin.task;
 
+import kevin.Kevin;
 import kevin.KevinException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import static java.util.regex.Pattern.compile;
 
 /**
  * Task is the parent class of all tasks.
  */
 public class Task {
-    private static final Pattern PIPE_SPLITTER = Pattern.compile("\\s*\\|\\s*");
+    private static final Pattern PIPE_SPLITTER = compile("\\s*\\|\\s*");
 
     protected String description;
     protected boolean isDone;
@@ -98,14 +102,19 @@ public class Task {
      * Parses DateTimeString from tasks.txt into LocalDateTime.
      * Accepts d MMM yyyy hmma e.g 12 Apr 2026 1230pm and without the minutes e.g 12 Apr 2026 1130am.
      */
-    public static LocalDateTime parseSavedDateTimeString(String dateTimeString) {
-        DateTimeFormatter formatter = new DateTimeFormatterBuilder().
-                appendPattern("d MMM yyyy ").
-                optionalStart().appendPattern("hmm").optionalEnd().
-                optionalStart().appendPattern("h").optionalEnd().
-                appendPattern("a").
-                toFormatter(Locale.ENGLISH);
-        return LocalDateTime.parse(dateTimeString, formatter);
+    public static LocalDateTime parseSavedDateTimeString(String dateTimeString) throws KevinException {
+        try {
+            DateTimeFormatter formatter = new DateTimeFormatterBuilder().
+                    appendPattern("d MMM yyyy ").
+                    optionalStart().appendPattern("hmm").optionalEnd().
+                    optionalStart().appendPattern("h").optionalEnd().
+                    appendPattern("a").
+                    toFormatter(Locale.ENGLISH);
+            return LocalDateTime.parse(dateTimeString, formatter);
+        } catch (DateTimeParseException e) {
+            throw new KevinException("DateTime is corrupted.");
+        }
+
     }
 
     /**
@@ -117,8 +126,15 @@ public class Task {
      */
     public static Task parseLine(String line) throws KevinException {
         try {
-            //Each task must contain the form 1 | <description> if done or 0 | <description> if not done
-            assert line.contains("1 | ") | line.contains("0 | ");
+            //Each task must contain 1 | if done or 0 | if not done
+            boolean containsDoneMarker = Pattern.compile("\\|\\s*1\\s*\\|")
+                    .matcher(line)
+                    .find();
+            boolean containsNotDoneMarker = Pattern.compile("\\|\\s*0\\s*\\|")
+                    .matcher(line)
+                    .find();
+
+            assert containsDoneMarker || containsNotDoneMarker: "Task has no done or not done marker";
 
             String[] parts = PIPE_SPLITTER.split(line);
             String type = parts[0];
@@ -126,7 +142,7 @@ public class Task {
             String description = parts[2];
 
             //Each task must be of type ToDo, Deadline or Event
-            assert Set.of("T", "D", "E").contains(type);
+            assert Set.of("T", "D", "E").contains(type) : "Task is not a ToDo, Deadline or Event";
 
             return switch (type) {
                 case "T" -> new ToDo(description, isDone);
@@ -135,8 +151,10 @@ public class Task {
                         parseSavedDateTimeString(parts[4]));
                 default -> new Task("Invalid task, can ignore");
             };
-        } catch (AssertionError | Exception e) {
-            throw new KevinException("Task is corrupted.");
+        } catch (AssertionError | KevinException e) {
+            throw new KevinException(e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new KevinException("Task is missing the DateTimes.");
         }
     }
 
