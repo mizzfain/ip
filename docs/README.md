@@ -11,7 +11,7 @@ Mac users: Ensure you have the precise JDK version prescribed [here](https://se-
 ## Using the App
 1. Open a terminal, cd to the folder containing the JAR file, and run java -jar kevin.jar.
 A GUI similar to the one below should appear in a few seconds.
-![Screenshot 2026-09-19 190805.png](../../OneDrive/Pictures/Screenshots/Screenshot%202026-09-19%20190805.png)
+![UI Snapshot](Ui.png)
 2. Type a command in the command box and press Enter or click on the Send button to execute it.\
 For example, type `list` to display any previously saved Tasks.
 
