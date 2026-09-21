@@ -86,11 +86,11 @@ To mark/unmark a Task, use the Task's number to identify it.
 
 Format: `mark NUMBER` or `unmark NUMBER`
 
-Example usage: `mark 3`
+Example usage: `mark 3` or `unmark 3`
 
 ## Snoozing Tasks
 For Tasks with a DateTime such as Deadline or Event, you can use `snooze` to postpone
-the DateTime using the Task's number to identify it. 
+the DateTime using the Task's number to identify it.
 For example, if Deadlines get extended or the Event reschedules. 
 
 The format changes depending on the type of Task.
@@ -101,7 +101,7 @@ For Events, use `snooze NUMBER /from DATETIME /to DATETIME`
 
 ## Deleting Tasks
 
-When you have too many Tasks or simply want to remove completed/uncompleted ones, use `delete`.
+When you have too many Tasks or simply want to remove completed/uncompleted ones, use `delete`. 
 Again, use the task's number to identify it.
 
 Format: `delete NUMBER`
@@ -109,6 +109,8 @@ Format: `delete NUMBER`
 Example usage: delete `1`
 
 # Closing the app
-When you are done using Kevin, simple type `bye` to close the app. 
+When you are done using Kevin, simple type `bye` to close the app.
+
 All tasks will be saved in the home folder of the `.jar` file in `data/tasks.txt`
-and will be automatically loaded when you open the app again.
+and will be automatically loaded when you open the app again.\
+Do not edit any of the tasks in the file directly or it may have errors loading them.
